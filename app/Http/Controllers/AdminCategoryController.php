@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Food;
-use App\Photo;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class AdminFoodController extends Controller
+class AdminCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +16,8 @@ class AdminFoodController extends Controller
      */
     public function index()
     {
-        $foods=Food::all();
-        return view('admin.foods.index',compact('foods'));
+        $categories= Category::all();
+        return view('admin.categories.index',compact('categories'));
     }
 
     /**
@@ -29,8 +27,7 @@ class AdminFoodController extends Controller
      */
     public function create()
     {
-        $category=Category::lists('name','id')->all();
-        return view('admin.foods.create',compact('category'));
+        //
     }
 
     /**
@@ -41,16 +38,9 @@ class AdminFoodController extends Controller
      */
     public function store(Request $request)
     {
-            $input=$request->all();
-            unset($input['photo_id']);
-            $food=Food::create($input);
-            if($file=$request->file('photo_id')){
-                $name=time().$file->getClientOriginalName();
-                $file->move('images',$name);
-                Photo::create(['file'=>$name,'imageable_id'=>$food->id ,'imageable_type'=>'App\Food']);
-            }
-            return redirect('admin/foods');
-   }
+        Category::create($request->all());
+        return redirect('admin/categories');
+    }
 
     /**
      * Display the specified resource.
@@ -71,9 +61,8 @@ class AdminFoodController extends Controller
      */
     public function edit($id)
     {
-        $food=Food::findOrFail($id);
-        $category=Category::lists('name','id')->all();
-        return view('admin.foods.edit',compact('food','category'));
+        $category=Category::find($id);
+        return view('admin.categories.edit',compact('category'));
     }
 
     /**
@@ -85,15 +74,8 @@ class AdminFoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $food = Food::find($id);
-        if ($file =$request->file('photo_id')) {
-            $name=time().$file->getClientOriginalName();
-            $file->move('images',$name);
-            Photo::create(['file'=>$name,'imageable_id'=>$id ,'imageable_type'=>'App\Food']);
-        }
-        $food->update($request->all());
-        $food->save();
-        return redirect('admin/foods');
+        Category::find($id)->update($request->all());
+        return redirect('admin/categories');
     }
 
     /**
@@ -104,6 +86,7 @@ class AdminFoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::find($id)->delete();
+        return redirect('admin/categories');
     }
 }

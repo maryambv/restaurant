@@ -112,10 +112,10 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> Categories<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">All Categories</a>
+                                <a href="{{route('admin.categories.index')}}">All Categories</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Create Category</a>
+                                <a href="{{route('admin.categories.index')}}">Create Category</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -127,21 +127,21 @@
                             <li>
                                 <a href="{{route('admin.media.index')}}">All Media</a>
                             </li>
-                            <li>
-                                <a href="{{route('admin.media.create')}}">Create Media</a>
-                            </li>
+                            {{--<li>--}}
+                                {{--<a href="{{route('admin.media.create')}}">Create Media</a>--}}
+                            {{--</li>--}}
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Menu<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="flot.html">Flot Charts</a>
+                                <a href="{{route('admin.menu.index')}}">Menu</a>
                             </li>
                             <li>
-                                <a href="morris.html">Morris.js Charts</a>
+                                <a href="{{route('admin.menu.index')}}">Create Menu</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index');
 Route::resource('admin/users','AdminUserController');
 Route::resource('admin/media','AdminMediaController');
 Route::resource('admin/foods','AdminFoodController');
+Route::resource('admin/categories','AdminCategoryController');
+Route::resource('admin/menu','AdminMenuController');

@@ -8,6 +8,7 @@
             <th>ID</th>
             <th>Photo</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Price</th>
             <th>Create</th>
             <th>Update</th>
@@ -20,6 +21,7 @@
                     <td>{{$food->id}}</td>
                     <td><img height="50" src="{{$food->photo->first() ? $food->photo->first()->file :'http://placehold.it/400x400'}}" alt=" "></td>
                     <td><a href="{{route('admin.foods.edit', $food->id)}}">{{$food->name}}</a></td>
+                    <td>{{$food->category->name}}</td>
                     <td>{{$food->price}}</td>
                     <td>{{$food->created_at->diffForHumans()}}</td>
                     <td>{{$food->updated_at->diffForHumans()}}</td>

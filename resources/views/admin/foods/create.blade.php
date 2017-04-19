@@ -16,6 +16,11 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('category_id', 'Role: ') !!}
+        {!! Form::select ('category_id',$category, null, ['class'=>'form-control']) !!}
+    </div>
+
+    <div class="form-group">
         <input name="photo_id" type="file" accept="image/*" onchange="loadFile(event)">
         {!! Form::label('photo_id', 'Photo: ') !!}
         <img height="50" id="photo_id"/>
