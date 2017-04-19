@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('content')
 
-    <h1>Edit User</h1>
+    <h1>Edit Foods</h1>
     <div class="row">
 
         <div class="col-sm-2">
             {!! Form::label( 'Photo: ') !!}
-            @foreach($user->photo as $photo)
+            @foreach($food->photo as $photo)
                 <div class="form-group">
 
                     {!! Form::open(['method'=>'DELETE' ,'action'=>['AdminMediaController@destroy', $photo->id]])!!}
@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-sm-9">
-            {!! Form::model($user,['method'=>'PATCH' ,'action'=>['AdminUserController@update',$user->id],'files'=>true])!!}
+            {!! Form::model($food,['method'=>'PATCH' ,'action'=>['AdminFoodController@update',$food->id],'files'=>true])!!}
 
             <div class="form-group">
                 {!! Form::label('name', 'Name: ') !!}
@@ -28,19 +28,11 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('email', 'Email: ') !!}
-                {!! Form::email ('email', null, ['class'=>'form-control']) !!}
+                {!! Form::label('price', 'Price: ') !!}
+                {!! Form::number('price',null,['class' => 'form-control','step'=>'any']) !!}
             </div>
 
-            <div class="form-group">
-                {!! Form::label('password', 'Password: ') !!}
-                {!! Form::password ('password', ['class'=>'form-control']) !!}
-            </div>
 
-            <div class="form-group">
-                {!! Form::label('role_id', 'Role: ') !!}
-                {!! Form::select ('role_id',$roles, null, ['class'=>'form-control']) !!}
-            </div>
 
             <div class="form-group">
                 <input name="photo_id" type="file" accept="image/*" onchange="loadFile(event)">
@@ -55,16 +47,16 @@
             </div>
 
             <div class="form-group">
-                {!! Form::submit('Edit User', ['class'=>'btn btn-primary col-sm-6']) !!}
+                {!! Form::submit('Edit Food', ['class'=>'btn btn-primary col-sm-6']) !!}
             </div>
 
             {!! Form::close() !!}
 
 
-            {!! Form::open(['method'=>'DELETE' ,'action'=>['AdminUserController@destroy',$user->id]])!!}
+            {!! Form::open(['method'=>'DELETE' ,'action'=>['AdminFoodController@destroy',$food->id]])!!}
 
             <div class="form-group">
-                {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-6']) !!}
+                {!! Form::submit('Delete Food', ['class'=>'btn btn-danger col-sm-6']) !!}
             </div>
 
             {!! Form::close() !!}
@@ -73,5 +65,5 @@
     <div class="row">
         @include('includes.form_error')
     </div>
-    
+
 @endsection

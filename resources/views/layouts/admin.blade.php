@@ -87,7 +87,7 @@
                                 <a href="{{route('admin.users.index')}}">All Users</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Create User</a>
+                                <a href="{{route('admin.users.create')}}">Create User</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -96,13 +96,13 @@
 
 
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Foods<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">All Posts</a>
+                                <a href="{{route('admin.foods.index')}}">All foods</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Create Post</a>
+                                <a href="{{route('admin.foods.create')}}">Create food</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -125,10 +125,10 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> Media<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">All Media</a>
+                                <a href="{{route('admin.media.index')}}">All Media</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Create Media</a>
+                                <a href="{{route('admin.media.create')}}">Create Media</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -229,7 +229,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
+                    <h1 class="page-header">Admin</h1>
                     @yield('content')
                 </div>
                 <!-- /.col-lg-12 -->

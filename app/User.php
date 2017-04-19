@@ -24,6 +24,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     public function role(){
-        return $this->belongsTo('App/Role');
+        return $this->belongsTo('App\Role');
+    }
+    public function photo(){
+        return $this->morphMany('App\Photo', 'imageable');
     }
 }

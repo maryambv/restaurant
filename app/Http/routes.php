@@ -12,10 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.foods.index');
 });
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
 Route::resource('admin/users','AdminUserController');
+Route::resource('admin/media','AdminMediaController');
+Route::resource('admin/foods','AdminFoodController');

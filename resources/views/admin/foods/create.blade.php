@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
-    <h1>Create Users </h1>
+    <h1>Create Foods </h1>
 
-    {!! Form::open(['method'=>'POST' ,'action'=>'AdminUserController@store','files'=>true])!!}
+    {!! Form::open(['method'=>'POST' ,'action'=>'AdminFoodController@store','files'=>true])!!}
 
     <div class="form-group">
         {!! Form::label('name', 'Name: ') !!}
@@ -11,21 +11,9 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('email', 'Email: ') !!}
-        {!! Form::email ('email', null, ['class'=>'form-control']) !!}
+        {!! Form::label('price', 'Price: ') !!}
+        {!! Form::number('price',null,['class' => 'form-control','step'=>'any']) !!}
     </div>
-
-    <div class="form-group">
-        {!! Form::label('password', 'Password: ') !!}
-        {!! Form::password ('password', ['class'=>'form-control']) !!}
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('role_id', 'Role: ') !!}
-        {!! Form::select ('role_id',array(''=>'Choose Option')+$roles, null, ['class'=>'form-control']) !!}
-    </div>
-
-
 
     <div class="form-group">
         <input name="photo_id" type="file" accept="image/*" onchange="loadFile(event)">
@@ -40,7 +28,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::submit('Create User', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Create Food', ['class'=>'btn btn-primary']) !!}
     </div>
 
     {!! Form::close() !!}
