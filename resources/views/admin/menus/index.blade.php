@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{$menu->id}}</td>
                         <td><a href="{{route('admin.menu.edit', $menu->id)}}">{{$menu->food->name}}</a></td>
-                        <td>{{$menu->day}}</td>
+                        {{--<td>{{createFromDate(null, 12, 25)}}</td>--}}
                     </tr>
 
                 @endforeach
@@ -40,7 +40,7 @@
                 {!! Form::select ('food_id',$foods, null, ['class'=>'form-control']) !!}
             </div>
             <div class="form-group col-sm-3">
-                {!! Form::select ('day',array('sat'=>'sat','sun'=>'sun','mon'=>'mon'), null, ['class'=>'form-control']) !!}
+                {!! Form::select ('day',array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'), null, ['class'=>'form-control']) !!}
             </div>
 
             <div class="form-group col-sm-3">

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Food;
 use App\Menu;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class AdminMenuController extends Controller
 {
@@ -17,8 +19,11 @@ class AdminMenuController extends Controller
      */
     public function index()
     {
+//        $dt = Carbon::now();
+//        return $dt;
         $foods=Food::lists('name','id');
-        $menus=Menu::all();
+        $menus=Menu::groupby('day')->get();
+
         return view('admin.menus.index',compact('foods','menus'));
     }
 
@@ -63,7 +68,9 @@ class AdminMenuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $menu=Menu::findOrFail($id);
+        $foods=Food::lists('name','id')->all();
+        return view('admin.menus.edit',compact('menu','foods'));
     }
 
     /**
@@ -75,7 +82,10 @@ class AdminMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+        $menu->update($request->all());
+        $menu->save();
+        return redirect('admin/menu');
     }
 
     /**
@@ -86,6 +96,8 @@ class AdminMenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+        $menu->delete();
+        return redirect('admin/menu');
     }
 }

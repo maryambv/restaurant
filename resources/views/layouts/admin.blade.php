@@ -140,9 +140,7 @@
                             <li>
                                 <a href="{{route('admin.menu.index')}}">Menu</a>
                             </li>
-                            <li>
-                                <a href="{{route('admin.menu.index')}}">Create Menu</a>
-                            </li>
+
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
