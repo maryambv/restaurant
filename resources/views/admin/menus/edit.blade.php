@@ -9,7 +9,7 @@
             {!! Form::select('food_id',$foods, null, ['class'=>'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::select ('day',array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'), null, ['class'=>'form-control']) !!}
+            {!! Form::select ('day',array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'), null, ['class'=>'form-control']) !!}
         </div>
 
         <div class="form-group">

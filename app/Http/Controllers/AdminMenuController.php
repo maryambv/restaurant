@@ -19,10 +19,8 @@ class AdminMenuController extends Controller
      */
     public function index()
     {
-//        $dt = Carbon::now();
-//        return $dt;
         $foods=Food::lists('name','id');
-        $menus=Menu::groupby('day')->get();
+        $menus=Menu::orderBy('day')->get();
 
         return view('admin.menus.index',compact('foods','menus'));
     }
@@ -45,7 +43,10 @@ class AdminMenuController extends Controller
      */
     public function store(Request $request)
     {
-        Menu::create($request->all());
+        $menus = DB::select('select * from menus where food_id = ? and day =?', [$request->food_id ,$request->day ]);
+        if (count($menus) ==0){
+            Menu::create($request->all());
+        }
         return redirect('admin/menu');
     }
 
@@ -83,8 +84,13 @@ class AdminMenuController extends Controller
     public function update(Request $request, $id)
     {
         $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
-        $menu->save();
+        $menus = DB::select('select * from menus where food_id = ? and day =?', [$request->food_id ,$request->day ]);
+        if (count($menus) ==0) {
+            $menu->update($request->all());
+            $menu->save();
+        }else{
+            $menu->delete();
+        }
         return redirect('admin/menu');
     }
 
