@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Menu;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $today = carbon::today()->dayOfWeek;
+        $menus = Menu::where('day', $today)->get();
+        return view('user.index', compact('user', 'menus'));
     }
 }

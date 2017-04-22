@@ -10,16 +10,39 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
-    return view('admin.foods.index');
-});
+//
+//Route::get('/', function () {
+//    return view('admin.foods.index');
+//});
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-Route::resource('admin/users','AdminUserController');
+Route::get('/', 'HomeController@index');
+
+Route::group(['middleware'=>'admin'], function (){
+
+    Route::resource('admin/users','AdminUserController');
+    Route::resource('admin/foods','AdminFoodController');
+    Route::resource('admin/categories','AdminCategoryController');
+    Route::resource('admin/menu','AdminMenuController');
+
+});
+
 Route::resource('admin/media','AdminMediaController');
-Route::resource('admin/foods','AdminFoodController');
-Route::resource('admin/categories','AdminCategoryController');
-Route::resource('admin/menu','AdminMenuController');
+
+
+
+Route::get('user/create', ['as' => 'user.create', 'uses' => "UserController@create"]);
+Route::Post('user', ['as' => 'user.store', 'uses' => "UserController@store"]);
+Route::get('user', ['as' => 'user.index', 'uses' => "UserController@index"]);
+
+
+
+Route::group(['middleware'=>'user'], function () {
+
+
+    Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
+
+    Route::put('user/update', ['as' => 'user.update', 'uses' => "UserController@update"]);
+    Route::delete('user/delete', ['as' => 'user.destroy', 'uses' => "UserController@destroy"]);
+});

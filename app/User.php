@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    protected $primaryKey = "id";
     /**
      * The attributes that are mass assignable.
      *
@@ -28,5 +29,13 @@ class User extends Authenticatable
     }
     public function photo(){
         return $this->morphMany('App\Photo', 'imageable');
+    }
+
+    public function isAdmin(){
+        if ($this->role->name =="Administrator"){
+
+            return true;
+        }
+        return false;
     }
 }
