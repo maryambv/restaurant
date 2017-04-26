@@ -27,9 +27,14 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
     public function photo(){
         return $this->morphMany('App\Photo', 'imageable');
     }
+    public function order(){
+        return $this->hasMany('App\Order');
+    }
+
 
     public function isAdmin(){
         if ($this->role->name =="Administrator"){

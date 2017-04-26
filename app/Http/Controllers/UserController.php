@@ -32,17 +32,23 @@ class UserController extends Controller
         if (Auth::attempt(["email" => $user->email, 'password' => $request->password])) {
             return redirect('user');
         }
-
-
-
     }
 
     public function index()
     {
         $user = Auth::user();
-        $today = carbon::today()->dayOfWeek;
-        $menus =Menu::where('day', $today)->get();
-        return view('user.index',compact('user', 'menus'));
+        if ($user->role->name == 'Administrator') {
+
+            $users=User::all();
+            return view('admin.users.index',compact('users'));
+
+        }else{
+
+            $today = carbon::today()->dayOfWeek;
+            $menus = Menu::where('day', $today)->get();
+            return view('user.index', compact('user', 'menus'));
+
+        }
     }
 
     public function create()

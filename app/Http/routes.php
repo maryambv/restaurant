@@ -45,4 +45,6 @@ Route::group(['middleware'=>'user'], function () {
 
     Route::put('user/update', ['as' => 'user.update', 'uses' => "UserController@update"]);
     Route::delete('user/delete', ['as' => 'user.destroy', 'uses' => "UserController@destroy"]);
+
+    Route::resource('/order','OrderController');
 });

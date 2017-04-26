@@ -18,27 +18,40 @@
             @endforeach
         </div>
     @endif
+    <div class="col-sm-4 col-md-offset-2 form-group">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Photo</th>
+                <th>select</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if($menus)
+                {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
+                    @foreach($menus as $menu)
+                        <tr >
+                            <td >{{$menu->food->name}}</td>
+                            <td>{{$menu->food->price}}</td>
+                            <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
+                            <td>
 
-    <table class="table col-md-offset-2">
-        <thead>
-        <tr>
+                                {!! Form::select($menu->food->name ,range(0,100))!!}
 
-            <th>Name</th>
-            <th>Photo</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        @if($menus)
-            @foreach($menus as $menu)
-                <tr >
-                    <td class="col-sm-1">{{$menu->food->name}}</td>
-                    <td class="col-sm-1"><img height="150" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/400x400'}}" alt=" "></td>
-                    <td class="col-sm-1">{{$menu->food->price}}</td>
-                </tr>
-            @endforeach
-        @endif
-        </tbody>
-    </table>
+                                {!! Form::checkbox('foods[]',$menu->food->id)!!}
+                                    
+                            </td>    
+                        </tr>
+                    @endforeach
+                    <div class="form-group">
+                        {!! Form::submit('Buy', ['class'=>'btn btn-primary']) !!}
+                    </div>
+                {!! Form::close() !!}</td>              
+            @endif
+            </tbody>
+        </table>
+    </div>
 
 @endsection
