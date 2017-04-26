@@ -18,7 +18,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::where('status','not_pay')->get();
-        return view ('order.index' , compact('orders'));
+        $total=0;
+        foreach ($orders as $order) {
+            $total= $total+($order->count * $order->food->price);
+        }
+        return view ('order.index' , compact('orders','total'));
     }
 
     /**
