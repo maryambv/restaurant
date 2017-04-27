@@ -36,4 +36,7 @@
         @endif
         </tbody>
     </table>
+        <div class="row">
+        @include('includes.form_error')
+    </div>
 @stop

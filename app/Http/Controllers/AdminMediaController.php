@@ -6,6 +6,7 @@ use App\Photo;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMediaController extends Controller
 {
@@ -30,6 +31,13 @@ class AdminMediaController extends Controller
         $photo=Photo::find($id);
         unlink(public_path().$photo->file);
         $photo->delete();
-        return redirect('admin/media');
+        $user = Auth::user();
+        if ($user->role->name == 'Administrator') {
+
+             return redirect('admin/media');
+         }else{
+            return redirect('user');
+         }
+        
     }
 }

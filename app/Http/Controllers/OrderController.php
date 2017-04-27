@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PayRequest;
 use App\Order;
 use App\Food;
 use App\Http\Requests;
@@ -22,7 +23,12 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $total= $total+($order->count * $order->food->price);
         }
-        return view ('order.index' , compact('orders','total'));
+        if ($total>0){
+             return view ('order.index' , compact('orders','total'));
+         }else{
+            return redirect('user');
+         }
+       
     }
 
     /**
@@ -41,7 +47,7 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PayRequest $request)
     {
         $input = $request->all();
         $user_id = Auth::user()->id;
@@ -87,6 +93,17 @@ class OrderController extends Controller
         //
     }
 
+
+    public function pay()
+    {
+        $orders = Order::all();
+        foreach ($orders as $order) {
+            $order->status = 'pay';
+            $order->save();
+        }
+        return redirect('/user');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -95,6 +112,9 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return redirect ('/order');
     }
 }
