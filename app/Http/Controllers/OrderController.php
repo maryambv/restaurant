@@ -135,4 +135,10 @@ class OrderController extends Controller
 
         return redirect ('/order');
     }
+    public function menu(){
+        $user=Auth::user()->name;
+        $tomorrow = carbon::tomorrow()->dayOfWeek;
+        $menus = Menu::where('day', $tomorrow)->get();
+        return view('user.menu.index',compact('user','menus'));
+    }
 }

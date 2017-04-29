@@ -5,7 +5,6 @@
     @stop
 @section('content')
 
-    
     <div class= 'row'>
         @if($user)
             <div class="col-md-offset-2 form-group">
@@ -16,7 +15,9 @@
 
                     </div>
                 @endforeach
+
                 Credit: {{$user->credit}}
+
                 {!! Form::open(['method'=>'GET' ,'action'=>'UserController@credit'])!!}
                     <div class="form-group">
                         {!! Form::submit('Charge Credit', ['class'=>'btn btn-primary']) !!}
@@ -25,6 +26,7 @@
 
             </div>
         @endif
+
         <div class="col-sm-4 col-md-offset-4 form-group row">
             @if(count($menus)>0)
                  {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
@@ -40,31 +42,29 @@
                         </thead>
                         <tbody>
                             @foreach($menus as $menu)
-                                <tr >
-                                    <td >{{$menu->food->name}}</td>
+                                <tr>
+                                    <td>{{$menu->food->name}}</td>
                                     <td>{{$menu->food->category->name}}</td>
                                     <td>{{$menu->food->price}}</td>
                                     <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                                    <td>
-
-                                        {!! Form::select($menu->food->id,range(0,20))!!}
-
-                                        {{--{!! Form::select($menu->food->name ,range(0,100),1)!!}--}}
-
-                                        {{--{!! Form::checkbox('foods[]',$menu->food->id)!!}--}}
-
-                                    </td>
+                                    <td>{!! Form::select($menu->food->id,range(0,20))!!}</td>
                                 </tr>
                             @endforeach
-                        
                         </tbody>
                     </table>
 
-                    <div class="form-group">
+                    <div class="form-group row">
                         {!! Form::submit('Buy', ['class'=>'btn btn-primary col-sm-6']) !!}
                     </div>
                 {!! Form::close() !!}</td>
             @endif
+
+            {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@menu'])!!}
+                <div class="form-group row">
+                    {!! Form::submit('Menu', ['class'=>'btn btn-base col-sm-6']) !!}
+                </div>
+            {!! Form::close() !!}
+
         </div>
     </div>
     <div class="row">

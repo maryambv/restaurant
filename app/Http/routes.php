@@ -46,4 +46,6 @@ Route::group(['middleware'=>'user'], function () {
 
     Route::resource('/order','OrderController');
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
+    Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
+    Route::post('user/menu', ['as' => 'user.menu', 'uses' => "OrderController@menu"]);
 });
