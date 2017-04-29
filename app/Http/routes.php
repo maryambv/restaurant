@@ -11,16 +11,13 @@
 |
 */
 //
-//Route::get('/', function () {
-//    return view('admin.foods.index');
-//});
+
 
 Route::auth();
 
 Route::get('/', 'HomeController@index');
 
 Route::group(['middleware'=>'admin'], function (){
-	// Route::resource('admin','AdminUserController');
     Route::resource('admin/users','AdminUserController');
     Route::resource('admin/foods','AdminFoodController');
     Route::resource('admin/categories','AdminCategoryController');
@@ -29,16 +26,17 @@ Route::group(['middleware'=>'admin'], function (){
 
 });
 
-Route::resource('admin/media','AdminMediaController');
+
 
 Route::get('user/create', ['as' => 'user.create', 'uses' => "UserController@create"]);
 Route::Post('user', ['as' => 'user.store', 'uses' => "UserController@store"]);
 Route::get('user', ['as' => 'user.index', 'uses' => "UserController@index"]);
-Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
+
 
 
 
 Route::group(['middleware'=>'user'], function () {
+    Route::resource('admin/media','AdminMediaController');
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
 
     Route::put('user/update', ['as' => 'user.update', 'uses' => "UserController@update"]);
@@ -48,4 +46,5 @@ Route::group(['middleware'=>'user'], function () {
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
     Route::post('user/menu', ['as' => 'user.menu', 'uses' => "OrderController@menu"]);
+    Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
 });

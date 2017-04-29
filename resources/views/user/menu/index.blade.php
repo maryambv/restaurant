@@ -4,9 +4,11 @@
 @stop
 
 @section('content')
+
     @if(count($menus)>0)
         <div class="col-sm-4 col-md-offset-4 form-group row">
-            <table class="table">
+            <h1 class="form-group row">Tomorrow </h1>
+            <table class="table form-group row">
                 <thead>
                     <tr>
                         <th>Food</th>

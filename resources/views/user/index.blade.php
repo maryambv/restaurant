@@ -29,6 +29,7 @@
 
         <div class="col-sm-4 col-md-offset-4 form-group row">
             @if(count($menus)>0)
+                <h1 class="form-group row">Today</h1>
                  {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
                     <table class="table">
                         <thead>

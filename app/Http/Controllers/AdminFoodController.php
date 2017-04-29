@@ -52,23 +52,7 @@ class AdminFoodController extends Controller
             return redirect('admin/foods');
    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $food=Food::findOrFail($id);
@@ -76,13 +60,6 @@ class AdminFoodController extends Controller
         return view('admin.foods.edit',compact('food','category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $food = Food::find($id);
@@ -96,14 +73,10 @@ class AdminFoodController extends Controller
         return redirect('admin/foods');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $food= Food::findOrFail($id);
+        $food->delete();
+        return redirect('admin/foods');
     }
 }

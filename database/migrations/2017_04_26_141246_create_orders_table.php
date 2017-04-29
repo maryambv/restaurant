@@ -17,6 +17,8 @@ class CreateOrdersTable extends Migration
             $table->integer('food_id')->index()->unsigned()->nullable();
             $table->integer('user_id')->index()->unsigned()->nullable();
             $table->timestamps();
+            // $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
