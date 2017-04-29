@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('panel')
     {{$user->name}}
+
     @stop
 @section('content')
 
@@ -15,6 +16,13 @@
 
                     </div>
                 @endforeach
+                Credit: {{$user->credit}}
+                {!! Form::open(['method'=>'GET' ,'action'=>'UserController@credit'])!!}
+                    <div class="form-group">
+                        {!! Form::submit('Charge Credit', ['class'=>'btn btn-primary']) !!}
+                    </div>
+                {!! Form::close() !!}
+
             </div>
         @endif
         <div class="col-sm-4 col-md-offset-4 form-group row">
@@ -39,9 +47,11 @@
                                     <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
                                     <td>
 
-                                        {!! Form::select($menu->food->name ,range(0,100),1)!!}
+                                        {!! Form::select($menu->food->id,range(0,20))!!}
 
-                                        {!! Form::checkbox('foods[]',$menu->food->id)!!}
+                                        {{--{!! Form::select($menu->food->name ,range(0,100),1)!!}--}}
+
+                                        {{--{!! Form::checkbox('foods[]',$menu->food->id)!!}--}}
 
                                     </td>
                                 </tr>
@@ -53,7 +63,7 @@
                     <div class="form-group">
                         {!! Form::submit('Buy', ['class'=>'btn btn-primary col-sm-6']) !!}
                     </div>
-                {!! Form::close() !!}</td>  
+                {!! Form::close() !!}</td>
             @endif
         </div>
     </div>

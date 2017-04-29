@@ -73,7 +73,6 @@ class UserController extends Controller
         } else {
             $input = $request->all();
         }
-
         if ($file = $request->file('photo_id')) {
 
             $name = time() . $file->getClientOriginalName();
@@ -91,7 +90,7 @@ class UserController extends Controller
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         $user->delete();
-        return redirect('/');
+        return redirect('');
     }
     public function credit()
     {

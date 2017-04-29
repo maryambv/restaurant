@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\User;
+use App\Menu;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\PayRequest;
 use App\Order;
@@ -49,7 +51,7 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PayRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
         $user_id = Auth::user()->id;
@@ -57,12 +59,17 @@ class OrderController extends Controller
         foreach ($old_orders as $order){
             $order->delete();
         }
-        foreach ($input['foods'] as $key) {
-            $food = food::findOrFail( $key );
-            $order = ['food_id'=> $key , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->name] ];
-            Order::create($order);
+        $today = carbon::today()->dayOfWeek;
+        $menus = Menu::where('day', $today)->get();
+        foreach ($menus as $menu) {
+            $food = $menu->food;
+            if ($input[$food->id]){
+              $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ];
+              Order::create($order);
+            }
+
         }
-         return redirect('/order');    
+         return redirect('/order');
     }
 
     /**
