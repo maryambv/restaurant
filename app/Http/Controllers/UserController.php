@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
+use App\Order;
 use App\Photo;
 use App\User;
 use Carbon\Carbon;
@@ -16,7 +17,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
         unset($input['photo_id']);
@@ -43,7 +43,6 @@ class UserController extends Controller
             return view('admin.users.index',compact('users'));
 
         }else{
-
             $today = carbon::today()->dayOfWeek;
             $menus = Menu::where('day', $today)->get();
             return view('user.index', compact('user', 'menus'));
@@ -53,7 +52,6 @@ class UserController extends Controller
 
     public function create()
     {
-
         return view('user.profile.register');
     }
 
@@ -93,7 +91,14 @@ class UserController extends Controller
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         $user->delete();
-        return redirect('user');
+        return redirect('/');
     }
+    public function credit()
+    {
+        $user = Auth::user();
+        $user->credit = $user->credit +100;
+        $user->save();
+        return redirect('user');
 
+    }
 }

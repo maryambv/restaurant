@@ -16,7 +16,7 @@ class CreateStatusCountColumn extends Migration
             //
 
             $table->integer('count');
-            $table->string('status';
+            $table->string('status');
         });
     }
 

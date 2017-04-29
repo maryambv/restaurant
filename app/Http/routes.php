@@ -34,7 +34,7 @@ Route::resource('admin/media','AdminMediaController');
 Route::get('user/create', ['as' => 'user.create', 'uses' => "UserController@create"]);
 Route::Post('user', ['as' => 'user.store', 'uses' => "UserController@store"]);
 Route::get('user', ['as' => 'user.index', 'uses' => "UserController@index"]);
-
+Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
 
 
 

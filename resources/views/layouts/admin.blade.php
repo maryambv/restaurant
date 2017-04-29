@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Home</a>
+            <a class="navbar-brand" href="{{route('admin.users.index')}}">Home</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -111,9 +111,9 @@
                     <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Food Categories<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li>
+<!--                             <li>
                                 <a href="{{route('admin.categories.index')}}">All Categories</a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a href="{{route('admin.categories.index')}}">Create Category</a>
                             </li>

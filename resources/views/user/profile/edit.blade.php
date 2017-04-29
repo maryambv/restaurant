@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('panel')
+    {{$user->name}}
+@stop
 @section('content')
     <div class="col-md-8 col-md-offset-2">
 
@@ -64,7 +67,7 @@
             {!! Form::open(['method'=>'DELETE' ,'action'=>['UserController@destroy',$user->id]])!!}
 
             <div class="col-md-8 col-md-offset-2 form-group">
-                {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-6']) !!}
+                {!! Form::submit('Delete Your Account', ['class'=>'btn btn-danger col-sm-6']) !!}
             </div>
 
             {!! Form::close() !!}
