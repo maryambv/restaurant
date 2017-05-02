@@ -5,40 +5,26 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Food;
 use App\Photo;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class AdminFoodController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $foods=Food::all();
         return view('admin.foods.index',compact('foods'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $category=Category::lists('name','id')->all();
         return view('admin.foods.create',compact('category'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
             $input=$request->all();
@@ -75,8 +61,19 @@ class AdminFoodController extends Controller
 
     public function destroy($id)
     {
-        $food= Food::findOrFail($id);
-        $food->delete();
+
+        try {
+            $food= Food::findOrFail($id);
+            $food->delete();
+            Session::flash('delete_food',$food->name ." has been deleted.");
+
+        } catch (QueryException $e) {
+//
+            if($e->getCode() == "23000"){
+                Session::flash('delete_food',$food->name ." has not been deleted.");
+            }
+
+        }
         return redirect('admin/foods');
     }
 }

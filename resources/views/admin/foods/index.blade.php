@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+    @if(Session::has("delete_food"))
 
+
+        <p class="bg-danger">{{Session('delete_food')}}</p>
+
+    @endif
     <h1>Foods</h1>
     <table class="table">
         <thead>

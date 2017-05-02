@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenusTable extends Migration
+class CreateForeignKeyFoodOnMenuColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,9 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('day');
-            $table->integer('food_id')->index()->unsigned()->nullable();
-            $table->timestamps();
-
-
+        Schema::table('menus', function (Blueprint $table) {
+            //
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::drop('menus');
+        Schema::table('menus', function (Blueprint $table) {
+            //
+        });
     }
 }
