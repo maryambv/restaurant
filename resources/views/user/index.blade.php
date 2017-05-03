@@ -2,7 +2,8 @@
 @section('panel')
     {{$user->name}}
 
-    @stop
+@endsection
+
 @section('content')
 
     <div class= 'row'>
@@ -17,12 +18,10 @@
                 @endforeach
 
                 Credit: {{$user->credit}}
+                 <div class="form-group">
+                     <a href="{{route('user.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
+                 </div>
 
-                {!! Form::open(['method'=>'GET' ,'action'=>'UserController@credit'])!!}
-                    <div class="form-group">
-                        {!! Form::submit('Charge Credit', ['class'=>'btn btn-primary']) !!}
-                    </div>
-                {!! Form::close() !!}
 
             </div>
         @endif
@@ -46,29 +45,37 @@
                                 <tr>
                                     <td>{{$menu->food->name}}</td>
                                     <td>{{$menu->food->category->name}}</td>
-                                    <td>{{$menu->food->price}}</td>
+                                    <td class="price">{{$menu->food->price}}</td>
                                     <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                                    <td>{!! Form::select($menu->food->id,range(0,20))!!}</td>
+                                    <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'select_item','price'=>$menu->food->price))!!}</td>
+                                    {{ Form::hidden('day', $day) }}
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    @if($can_order)
+                        <div class="form-group row">
+                            {!! Form::submit('Buy', ['class'=>'btn btn-primary col-sm-6']) !!}
+                            {!! Form::label("",null,array('class'=>'cost')) !!}
+                         </div>
+                    @endif
+                {!! Form::close() !!}
+             @endif
 
-                    <div class="form-group row">
-                        {!! Form::submit('Buy', ['class'=>'btn btn-primary col-sm-6']) !!}
-                    </div>
-                {!! Form::close() !!}</td>
-            @endif
+            <div class="form-group row">
+                <a href="/user/menu/{{($day+1)%7}}" class="col-sm-6 btn btn-default">Next Day</a>
+            </div>
 
-            {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@menu'])!!}
-                <div class="form-group row">
-                    {!! Form::submit('Menu', ['class'=>'btn btn-base col-sm-6']) !!}
-                </div>
-            {!! Form::close() !!}
 
         </div>
+
     </div>
+
     <div class="row">
-        @include('includes.form_error')
+         @include('includes.form_error')
     </div>
+@endsection
+
+@section('script')
+    <script src='js/main.js'></script>
 @endsection

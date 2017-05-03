@@ -29,8 +29,9 @@ Route::group(['middleware'=>'admin'], function (){
 
 
 Route::get('user/create', ['as' => 'user.create', 'uses' => "UserController@create"]);
-Route::Post('user', ['as' => 'user.store', 'uses' => "UserController@store"]);
-Route::get('user', ['as' => 'user.index', 'uses' => "UserController@index"]);
+Route::Post('/user', ['as' => 'user.store', 'uses' => "UserController@store"]);
+Route::get('/user', ['as' => 'user.index', 'uses' => "UserController@index"]);
+
 
 
 
@@ -45,6 +46,9 @@ Route::group(['middleware'=>'user'], function () {
     Route::resource('/order','OrderController');
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
-    Route::post('user/menu', ['as' => 'user.menu', 'uses' => "OrderController@menu"]);
     Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
+
+    Route::get('/ordered', 'OrderController@showOrder');
+
+    Route::get('user/menu/{day}', ['as' => 'user.menu', 'uses' => "UserController@show_menu"]);
 });

@@ -14,6 +14,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
+
     public function index()
     {
         $orders=Order::where('status','not_pay')->get();
@@ -42,8 +43,8 @@ class OrderController extends Controller
         foreach ($menus as $menu) {
             $food = $menu->food;
             if ($input[$food->id]){
-              $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ];
-              Order::create($order);
+                $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ,'day'=>$input['day']];
+                Order::create($order);
             }
 
         }
@@ -69,14 +70,24 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->delete();
-
         return redirect ('/order');
     }
 
     public function menu(){
+
         $user=Auth::user()->name;
         $tomorrow = carbon::tomorrow()->dayOfWeek;
         $menus = Menu::where('day', $tomorrow)->get();
         return view('user.menu.index',compact('user','menus'));
+    }
+
+
+    public function showOrder(){
+        $user_id=Auth::user()->id;
+        $orders= Order::where('user_id',$user_id)->get();
+        if (count($orders)>0){
+            return $orders;
+        }
+        return "s";
     }
 }

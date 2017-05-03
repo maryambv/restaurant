@@ -34,8 +34,8 @@
         <script>
             var loadFile = function(event) {
                 var output = document.getElementById('photo_id');
-                output.src = URL.createObjectURL(event.target.files[0]);
-            };
+                output.src = URL.createObjectURL(event.target.files[0])
+            }
         </script>
     </div>
 

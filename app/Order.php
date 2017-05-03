@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['food_id','user_id','count','status'];
+    protected $fillable = ['food_id','user_id','count','status','day'];
 
     public function food(){
         return $this->belongsTo('App\Food');

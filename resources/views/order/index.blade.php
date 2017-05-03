@@ -33,20 +33,19 @@
         <h2> Your credit: {{$user_credit}}</h2>
        @if($user_credit - $total>0)
 
-            {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@pay'])!!}
+            {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@pay' , 'class'=>'order_add'])!!}
                 <div class="form-group">
                     {!! Form::submit('Pay', ['class'=>'btn btn-primary col-sm-6']) !!}
                 </div>
             {!! Form::close() !!}
         @else
-            {!! Form::open(['method'=>'GET' ,'action'=>'UserController@credit'])!!}
-            <div class="form-group">
-                {!! Form::submit('Charge', ['class'=>'btn btn-danger col-sm-2']) !!}
-            </div>
-            {!! Form::close() !!}
+            <a href="{{route('user.credit')}}" class="form-group btn btn-primary">Charge</a>
         @endif
     </div>
     <div class="row">
         @include('includes.form_error')
     </div>
 @stop
+@section('script')
+    <script src='js/main.js'></script>
+@endsection
