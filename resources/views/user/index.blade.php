@@ -65,6 +65,7 @@
             <div class="form-group row">
                 <a href="/user/menu/{{($day+1)%7}}" class="col-sm-6 btn btn-default">Next Day</a>
             </div>
+                <table  class="table" id="table_show"></table>
 
 
         </div>

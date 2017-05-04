@@ -38,8 +38,7 @@ class OrderController extends Controller
         foreach ($old_orders as $order){
             $order->delete();
         }
-        $today = carbon::today()->dayOfWeek;
-        $menus = Menu::where('day', $today)->get();
+        $menus = Menu::where('day', $input['day'])->get();
         foreach ($menus as $menu) {
             $food = $menu->food;
             if ($input[$food->id]){
@@ -84,10 +83,7 @@ class OrderController extends Controller
 
     public function showOrder(){
         $user_id=Auth::user()->id;
-        $orders= Order::where('user_id',$user_id)->get();
-        if (count($orders)>0){
-            return $orders;
-        }
-        return "s";
+        $orders= Order::where('user_id',$user_id)->with(["food"])->get();
+        return $orders;
     }
 }
