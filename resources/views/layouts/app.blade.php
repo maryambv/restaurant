@@ -51,7 +51,7 @@
                     <li><a href="{{ url('/user') }}">Home</a></li>
                 </ul>
                 <ul class="nav navbar-nav order">
-                    <li><a>Orders</a></li>
+                    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

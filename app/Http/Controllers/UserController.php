@@ -50,18 +50,16 @@ class UserController extends Controller
 
     public function show_menu($day)
     {
-//        return $request->all();
         $user = Auth::user();
         $date= carbon::now();
         $orders  = Order::where('status','pay')->where('user_id',$user->id)->get();
         $can_order= true;
         foreach ($orders as $order) {
-            if($order->created_at->toDateString() == $date->toDateString() and $order->day == $day) {
+            if($order->created_at->toDateString() == $date->toDateString()) {
                 $can_order = false;
             }
         }
         $menus = Menu::where('day', $day)->get();
-
         return view('user.index', compact('user', 'menus','can_order','day'));
     }
 

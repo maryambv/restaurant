@@ -32,12 +32,13 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        $status=$request->submitbutton;
         $input = $request->all();
         $user_id = Auth::user()->id;
-        $old_orders = Order::where('user_id',$user_id)->where('status','not_pay')->get();
-        foreach ($old_orders as $order){
-            $order->delete();
-        }
+//        $old_orders = Order::where('user_id',$user_id)->where('status','not_pay')->get();
+//        foreach ($old_orders as $order){
+//            $order->delete();
+//        }
         $menus = Menu::where('day', $input['day'])->get();
         foreach ($menus as $menu) {
             $food = $menu->food;
@@ -47,7 +48,13 @@ class OrderController extends Controller
             }
 
         }
-         return redirect('/order');
+        if ($status=='Next Day'){
+            $day=($input['day']+1)%7;
+            return redirect('/user/menu/'.$day);
+        }else{
+            return redirect('/order');
+        }
+
     }
 
     public function pay()
@@ -83,7 +90,21 @@ class OrderController extends Controller
 
     public function showOrder(){
         $user_id=Auth::user()->id;
-        $orders= Order::where('user_id',$user_id)->with(["food"])->get();
+        $orders= Order::where('user_id',$user_id)->where('status','not_pay')->with(["food"])->get();
         return $orders;
+    }
+    public function getTotal(){
+        $user_id=Auth::user()->id;
+        $not_pay_orders=Order::where('status','not_pay')->where('user_id',$user_id)->get();
+        $total=0;
+        foreach ($not_pay_orders as $order) {
+            $total= $total+($order->count * $order->food->price);
+        }
+        return $total;
+    }
+    public function show(){
+        $user_id=Auth::user()->id;
+        $orders=Order::where('status','pay')->where('user_id',$user_id)->get();
+        return view('order.show',compact('orders'));
     }
 }

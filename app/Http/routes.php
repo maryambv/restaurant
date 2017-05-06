@@ -44,11 +44,15 @@ Route::group(['middleware'=>'user'], function () {
     Route::delete('user/delete', ['as' => 'user.destroy', 'uses' => "UserController@destroy"]);
 
     Route::resource('/order','OrderController');
+    Route::get('order/show', ['as' => 'order.show', 'uses' => "OrderController@Show"]);
+
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
     Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
 
     Route::get('/ordered', 'OrderController@showOrder');
+
+    Route::get('/total','OrderController@getTotal');
 
     Route::get('user/menu/{day}', ['as' => 'user.menu', 'uses' => "UserController@show_menu"]);
 });
