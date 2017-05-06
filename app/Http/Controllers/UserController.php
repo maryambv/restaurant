@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\chargeCredit;
 use App\Menu;
 use App\Order;
 use App\Photo;
@@ -50,12 +51,15 @@ class UserController extends Controller
 
     public function show_menu($day)
     {
+        if ($day>6){
+            return $this->index();
+        }
         $user = Auth::user();
         $date= carbon::now();
-        $orders  = Order::where('status','pay')->where('user_id',$user->id)->get();
+        $orders  = Order::where('user_id',$user->id)->get();
         $can_order= true;
         foreach ($orders as $order) {
-            if($order->created_at->toDateString() == $date->toDateString()) {
+            if($order->created_at->toDateString() == $date->toDateString() and $order->day== $day ) {
                 $can_order = false;
             }
         }
@@ -68,14 +72,12 @@ class UserController extends Controller
         return view('user.profile.register');
     }
 
-
     public function edit()
     {
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         return view('user.profile.edit', compact('user'));
     }
-
 
     public function update(Request $request)
     {
@@ -97,7 +99,6 @@ class UserController extends Controller
         return redirect('user');
     }
 
-
     public function destroy()
     {
         $user_id = Auth::user()->id;
@@ -105,12 +106,17 @@ class UserController extends Controller
         $user->delete();
         return redirect('');
     }
-    public function credit()
+
+    public function credit(ChargeCredit $request)
     {
         $user = Auth::user();
-        $user->credit = $user->credit +100;
+        $user->credit = $user->credit +$request->price;
         $user->save();
         return redirect('user');
 
+    }
+    public function editCredit(){
+        $user = Auth::user();
+        return view('user.credit',compact('user'));
     }
 }

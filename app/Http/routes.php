@@ -48,8 +48,9 @@ Route::group(['middleware'=>'user'], function () {
 
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
-    Route::get('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
+    Route::post('user/credit',['as' => 'user.credit', 'uses' => "UserController@credit"]);
 
+    Route::get('user/edit/credit',['as' => 'user.charge.credit', 'uses' => "UserController@editCredit"]);
     Route::get('/ordered', 'OrderController@showOrder');
 
     Route::get('/total','OrderController@getTotal');

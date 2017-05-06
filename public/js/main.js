@@ -1,10 +1,9 @@
 
 function main() {
-    total_cost()
+    total_cost(0)
     $(".order").click(
         function (e) {
             // e.preventDefault();
-            //          $('.show_order').show();
             $.ajax({
                 type: 'GET',
                 url: '/ordered',
@@ -39,7 +38,11 @@ function main() {
     );
 
     $('.select_item').change(function() {
-        total_cost()
+        var price = $(this).attr('price');
+        var count =$(this).val();
+        var cost=price*count;
+
+        total_cost(cost);
     });
 }
 // function delete_item(id) {
@@ -51,15 +54,10 @@ function main() {
 //             console.log(result);
 //         }
 //     });
-//
 // }
-function total_cost() {
-    var total=0;
-    $('.select_item').each(function() {
-        var price = $(this).attr('price');
-        var count =$(this).val();
-        total=total+price*count;
-    });
+function total_cost(s) {
+    var total=s;
+
     $.ajax({
         type: 'GET',
         url: '/total',

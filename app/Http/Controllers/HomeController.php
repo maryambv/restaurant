@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,7 @@ class HomeController extends Controller
 
         }else{
             $today = carbon::today()->dayOfWeek;
+            Session::flash('welcome_user',$user->name ." welcome.");
             return $this->show_menu($today);
 
         }

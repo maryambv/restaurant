@@ -1,10 +1,19 @@
 @extends('layouts.app')
+@section('home')
+    <li><a href="{{ url('/user') }}">Home</a></li>
+@endsection
+
+@section('order')
+    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
+@endsection
+
 @section('panel')
     {{$user->name}}
 
 @endsection
 
 @section('content')
+
     <div class= 'row'>
         @if($user)
             <div class="col-md-offset-2 form-group">
@@ -18,7 +27,7 @@
 
                 Credit: {{$user->credit}}
                  <div class="form-group">
-                     <a href="{{route('user.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
+                     <a href="{{route('user.charge.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
                  </div>
 
 
@@ -26,9 +35,28 @@
         @endif
 
         <div class="col-sm-4 col-md-offset-4 form-group row">
+            @if(Session::has("welcome_user"))
+                <p class="bg-success">{{Session('welcome_user')}}</p>
+
+            @endif
             @if(count($menus)>0)
-                <h1 class="form-group row">Today</h1>
-                 {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
+                @if ($day==0)
+                    <h1>Sunday</h1>
+                @elseif ($day==1)
+                    <h1>Monday</h1>
+                @elseif ($day==2)
+                    <h1>Tuesday</h1>
+                @elseif ($day==3)
+                    <h1>Wednesday</h1>
+                @elseif ($day==4)
+                    <h1>Thursday</h1>
+                @elseif ($day==5)
+                    <h1>Friday</h1>
+                @elseif ($day==6)
+                    <h1>Saturday</h1>
+                @endif
+
+                {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
                     <table class="table">
                         <thead>
                         <tr>
@@ -36,7 +64,6 @@
                             <th>Category</th>
                             <th>Price</th>
                             <th>Photo</th>
-                            <th>select</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,24 +73,29 @@
                                     <td>{{$menu->food->category->name}}</td>
                                     <td class="price">{{$menu->food->price}}</td>
                                     <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                                    <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'select_item','price'=>$menu->food->price))!!}</td>
+                                    @if($can_order)
+                                         <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'select_item','price'=>$menu->food->price))!!}</td>
+                                    @endif
                                     {{ Form::hidden('day', $day) }}
 
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    @if($can_order)
+
                         <div class="form-group row">
                             {!! Form::submit('Next Day', ['class'=>'btn btn-based col-sm-6 ', 'name' => 'submitbutton']) !!}
 
-                            {!! Form::label("",null,array('class'=>'cost')) !!}
+
                          </div>
                         <div class="form-group row">
-                            {!! Form::submit('Buy', ['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
+                            @if($can_order)
+                            {!! Form::submit('Pay', ['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
+                            @endif
+                            {!! Form::label("",null,array('class'=>'cost col-sm-6')) !!}
                         </div>
-                    <a  class="order btn btn-default form-group row">Order List</a>
-                    @endif
+                    <a  class="order form-group row">Order List</a>
+
                 {!! Form::close() !!}
              @endif
 

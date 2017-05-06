@@ -48,10 +48,10 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/user') }}">Home</a></li>
+                   @yield('home')
                 </ul>
                 <ul class="nav navbar-nav order">
-                    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
+                    @yield('order')
                 </ul>
 
                 <!-- Right Side Of Navbar -->
