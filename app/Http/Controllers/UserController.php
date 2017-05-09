@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -44,8 +45,9 @@ class UserController extends Controller
             return view('admin.users.index',compact('users'));
         }
         else{
-           $today = carbon::today()->dayOfWeek;
-           return $this->show_menu($today);
+
+            $today = carbon::today()->dayOfWeek;
+            return $this->show_menu($today);
         }
     }
 
