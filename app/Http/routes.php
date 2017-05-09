@@ -46,6 +46,8 @@ Route::group(['middleware'=>'user'], function () {
 
     Route::resource('/order','OrderController');
     Route::get('order/show', ['as' => 'order.show', 'uses' => "OrderController@Show"]);
+    Route::post('/order/static/menu', ['as' => 'order.static.menu', 'uses' => "OrderController@storeStatic"]);
+    Route::delete('/order/static/delete/{id}', ['as' => 'order.static.destroy', 'uses' => "OrderController@destroyStatic"]);
 
     Route::post('/order/pay', ['as' => 'order.pay', 'uses' => "OrderController@pay"]);
     Route::get('user/edit', ['as' => 'user.edit', 'uses' => "UserController@edit"]);
@@ -55,6 +57,7 @@ Route::group(['middleware'=>'user'], function () {
     Route::get('/ordered', 'OrderController@showOrder');
 
     Route::get('/total','OrderController@getTotal');
+    Route::get('/offered/day','OrderController@offeredDay');
 
     Route::get('user/menu/{day}', ['as' => 'user.menu', 'uses' => "UserController@show_menu"]);
 });

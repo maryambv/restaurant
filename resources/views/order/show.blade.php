@@ -3,6 +3,7 @@
     <li><a href="{{ url('/user') }}">Home</a></li>
 @endsection
 
+
 @section('content')
     <div class="col-md-offset-2 form-group">
         <h1>Order</h1>

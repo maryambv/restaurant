@@ -44,6 +44,17 @@ function main() {
 
         total_cost(cost);
     });
+
+    $('.static_menu').change(function() {
+         var price = $(this).attr('price');
+         var count =$(this).val();
+         var cost =price*count;
+        days_Offer(cost);
+
+        // var cost=price*count;
+        //
+        // total_cost(cost);
+    });
 }
 // function delete_item(id) {
 //     console.debug(id);
@@ -67,6 +78,20 @@ function total_cost(s) {
             if(total>0){
                 $('.cost').text(total);
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+}
+function days_Offer(s) {
+    $.ajax({
+        type: 'GET',
+        url: '/offered/day',
+        success:function(res_data)
+        {
+            total_cost(res_data*s);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(JSON.stringify(jqXHR));

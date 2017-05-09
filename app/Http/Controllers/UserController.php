@@ -6,6 +6,7 @@ use App\Http\Requests\chargeCredit;
 use App\Menu;
 use App\Order;
 use App\Photo;
+use App\Staticmenu;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,7 +67,8 @@ class UserController extends Controller
             }
         }
         $menus = Menu::where('day', $day)->get();
-        return view('user.index', compact('user', 'menus','can_order','day'));
+        $stmenus= Staticmenu::all();
+        return view('user.index', compact('user', 'menus','can_order','day','stmenus'));
     }
 
     public function create()
