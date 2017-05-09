@@ -4,7 +4,7 @@
 @endsection
 
 @section('order')
-    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
+    <li> <a href="{{route("order.show")}}">Paid Orders</a></li>
 @endsection
 
 @section('panel')
@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-
     <div class= 'row'>
         @if($user)
             <div class="col-md-offset-2 form-group">
@@ -29,15 +28,12 @@
                  <div class="form-group">
                      <a href="{{route('user.charge.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
                  </div>
-
-
             </div>
         @endif
 
         <div class="col-sm-4 col-md-offset-4 form-group row">
             @if(Session::has("welcome_user"))
                 <p class="bg-success">{{Session('welcome_user')}}</p>
-
             @endif
             @if(count($menus)>0)
                 @if ($day==0)
@@ -89,21 +85,15 @@
 
                          </div>
                         <div class="form-group row">
-                            @if($can_order)
-                            {!! Form::submit('Pay', ['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
-                            @endif
+                            {!! Form::submit('Pay or Edit',['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
                             {!! Form::label("",null,array('class'=>'cost col-sm-6')) !!}
                         </div>
-                    <a  class="order form-group row">Order List</a>
+                    <a  class="orderList form-group row">Order List</a>
 
                 {!! Form::close() !!}
              @endif
-
-
                 <table  class="table" id="table_show"></table>
                 <h1 class="order_status"></h1>
-
-
         </div>
 
     </div>

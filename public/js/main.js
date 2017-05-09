@@ -1,7 +1,7 @@
 
 function main() {
     total_cost(0)
-    $(".order").click(
+    $(".orderList").click(
         function (e) {
             // e.preventDefault();
             $.ajax({

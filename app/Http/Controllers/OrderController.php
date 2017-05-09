@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\User;
 use App\Menu;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests\PayRequest;
 use App\Order;
-use App\Food;
 use App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +14,6 @@ class OrderController extends Controller
 
     public function index()
     {
-
         $user=Auth::user();
         $orders=Order::where('status','not_pay')->where('user_id',$user->id)->orderBy('day')->get();
         $user_credit= $user->credit;

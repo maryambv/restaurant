@@ -4,7 +4,7 @@
     <li><a href="{{ url('/user') }}">Home</a></li>
 @endsection
 @section('order')
-    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
+    <li> <a href="{{route("order.show")}}">Paid Orders</a></li>
 @endsection
 @section('content')
     <div class="col-md-offset-2 form-group">

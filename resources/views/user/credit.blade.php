@@ -4,7 +4,7 @@
 @endsection
 
 @section('order')
-    <li> <a href="{{route("order.show")}}" class="order">Orders</a></li>
+    <li> <a href="{{route("order.show")}}">Paid Orders</a></li>
 @endsection
 
 @section('panel')

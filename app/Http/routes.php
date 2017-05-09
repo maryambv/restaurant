@@ -22,6 +22,7 @@ Route::group(['middleware'=>'admin'], function (){
     Route::resource('admin/foods','AdminFoodController');
     Route::resource('admin/categories','AdminCategoryController');
     Route::resource('admin/menu','AdminMenuController');
+    Route::resource('admin/static/menu','AdminStaticMenuController');
     Route::get('admin/orders', ['as' => 'admin.order.index', 'uses' => "AdminOrderController@index"]);
 
 });

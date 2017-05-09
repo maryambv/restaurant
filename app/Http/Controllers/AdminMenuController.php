@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Food;
 use App\Menu;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,7 @@ class AdminMenuController extends Controller
     {
         $foods=Food::lists('name','id');
         $menus=Menu::orderBy('day')->get();
+
 
         return view('admin.menus.index',compact('foods','menus'));
     }

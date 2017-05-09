@@ -76,14 +76,14 @@ class UserController extends Controller
 
     public function edit()
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         $user = User::findOrFail($user_id);
         return view('user.profile.edit', compact('user'));
     }
 
     public function update(Request $request)
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         $user = User::findOrFail($user_id);
         if (trim($request->password) == '') {
             $input = $request->except('password');
@@ -103,7 +103,7 @@ class UserController extends Controller
 
     public function destroy()
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         $user = User::findOrFail($user_id);
         $user->delete();
         return redirect('');

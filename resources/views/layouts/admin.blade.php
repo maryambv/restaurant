@@ -140,6 +140,9 @@
                             <li>
                                 <a href="{{route('admin.menu.index')}}">Menu</a>
                             </li>
+                            <li>
+                                <a href="{{route('admin.static.menu.index')}}">Static Menu</a>
+                            </li>
 
                         </ul>
                         <!-- /.nav-second-level -->

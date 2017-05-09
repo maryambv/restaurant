@@ -2,6 +2,9 @@
 @section('panel')
     {{$user->name}}
 @stop
+@section('home')
+    <li><a href="{{ url('/user') }}">Home</a></li>
+@endsection
 @section('content')
     <div class="col-md-8 col-md-offset-2">
 
