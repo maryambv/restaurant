@@ -52,24 +52,24 @@
                     <h1>Saturday</h1>
                 @endif
 
-                {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@storeStatic'])!!}
-                    <table class="table">
-                        <thead>
-                        <th>All Day</th>
-                        </thead>
-                        <tbody>
-                        @foreach($stmenus as $menu)
-                            <td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                            <td class="price">{{$menu->food->price}}$</td>
-                            <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'static_menu','price'=>$menu->food->price))!!}</td>
+                {{--{!! Form::open(['method'=>'POST' ,'action'=>'OrderController@storeStatic'])!!}--}}
+                    {{--<table class="table">--}}
+                        {{--<thead>--}}
+                        {{--<th>All Day</th>--}}
+                        {{--</thead>--}}
+                        {{--<tbody>--}}
+                        {{--@foreach($stmenus as $menu)--}}
+                            {{--<td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>--}}
+                            {{--<td class="price">{{$menu->food->price}}$</td>--}}
+                            {{--<td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'static_menu','price'=>$menu->food->price))!!}</td>--}}
 
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="form-group row">
-                        {!! Form::submit('All Day', ['class'=>'btn btn-primary col-sm-2',]) !!}
-                    </div>
-                {!! Form::close() !!}
+                        {{--@endforeach--}}
+                        {{--</tbody>--}}
+                    {{--</table>--}}
+                    {{--<div class="form-group row">--}}
+                        {{--{!! Form::submit('All Day', ['class'=>'btn btn-primary col-sm-2',]) !!}--}}
+                    {{--</div>--}}
+                {{--{!! Form::close() !!}--}}
 
 
                 {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
@@ -95,6 +95,14 @@
                                     {{ Form::hidden('day', $day) }}
 
                                 </tr>
+                            @endforeach
+
+                            @foreach($stmenus as $menu)
+                                <td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
+                                <td class="price">{{$menu->food->price}}$</td>
+                                @if($can_order)
+                                <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'extraF','price'=>$menu->food->price))!!}</td>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

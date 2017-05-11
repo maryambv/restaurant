@@ -50,24 +50,6 @@
                     </tr>
                 @endforeach
             @endif
-            @if($staticOrders)
-                @foreach($staticOrders as $order)
-                    <tr>
-                        <td>{{$order->food->name}}</td>
-                        <td>{{$order->count}}</td>
-                        <td>All</td>
-                        <td>{{$order->count * $order->food->price*count($orders)}}</td>
-
-                        <td>
-                            {!! Form::open(['method'=>'DELETE' ,'action'=>['OrderController@destroyStatic',$order->id]])!!}
-                            <div class="form-group">
-                                {!! Form::submit('Delete', ['class'=>'btn btn-danger col-sm-6']) !!}
-                            </div>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
             </tbody>
         </table>
         <h2> Total: {{$total}}</h2>

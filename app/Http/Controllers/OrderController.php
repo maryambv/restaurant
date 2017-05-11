@@ -24,13 +24,7 @@ class OrderController extends Controller
             $total= $total+($order->count * $order->food->price);
         }
         if ($total>0){
-            $staticOrders=Staticorder::where('user_id',$user->id)->get();
-            foreach ($staticOrders as $stOrder){
-                $total=$total+($stOrder->count*$stOrder->food->price*count($orders));
-
-            }
-
-             return view ('order.index' , compact('orders','total','user_credit','staticOrders'));
+             return view ('order.index' , compact('orders','total','user_credit'));
          }
         return $this->show();
     }
@@ -41,14 +35,25 @@ class OrderController extends Controller
         $input = $request->all();
         $user_id = Auth::user()->id;
         $menus = Menu::where('day', $input['day'])->get();
+        $staticMenus= Staticmenu::all();
         $order= Order::where('day', $input['day'])->where('user_id',$user_id)->get();
 
         if(count($order)==0){
 
             foreach ($menus as $menu) {
-                $food = $menu->food;
+                $food=$menu->food;
                 if ($input[$food->id]){
                     $order=Order::where('user_id',$user_id)->where('day',$input['day']);
+                    $order->delete();
+                    $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ,'day'=>$input['day']];
+                    Order::create($order);
+
+                }
+            }
+            foreach ($staticMenus as $menu) {
+                $food=$menu->food;
+                if ($input[$food->id]){
+                    $order=Order::where('user_id',$user_id)->where('food_id',$food->id )->where('day',$input['day']);
                     $order->delete();
                     $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ,'day'=>$input['day']];
                     Order::create($order);
@@ -93,12 +98,9 @@ class OrderController extends Controller
     public function getTotal(){
         $user_id=Auth::user()->id;
         $not_pay_orders=Order::where('status','not_pay')->where('user_id',$user_id)->get();
-        $static_orders=Staticorder::where('user_id',$user_id)->get();
         $total=0;
         foreach ($not_pay_orders as $order) {
-            foreach ($static_orders as $Sorder){
-                $total=$total+($Sorder->count* $Sorder->food->price);
-            }
+
             $total= $total+($order->count * $order->food->price);
         }
         return $total;
@@ -106,39 +108,9 @@ class OrderController extends Controller
     public function show(){
         $user_id=Auth::user()->id;
         $orders=Order::where('status','pay')->where('user_id',$user_id)->orderBy('day')->get();
-        $staticOrders=Staticorder::where('user_id',$user_id)->get();
-        return view('order.show',compact('orders','staticOrders'));
+        return view('order.show',compact('orders'));
     }
-    public function offeredDay()
-    {
-        $user_id=Auth::user()->id;
-        $orders=Order::where('status','not_pay')->where('user_id',$user_id)->get();
-        return (count($orders));
-    }
-    public function storeStatic(Request $request){
 
-        $input = $request->all();
-        $user_id = Auth::id();
-        $orders=Order::where('status','not_pay')->where('user_id',$user_id)->get();
-        if (count($orders)>0){
-            $StMenus = Staticmenu::all();
-            foreach ($StMenus as $menu) {
-                $food = $menu->food;
-                if ($input[$food->id]){
-                    $old=Staticorder::where('user_id',$user_id)->where('food_id',$food->id)->first();
-                    if ($old){
-                        $old->delete();
-                    }
-                    $StOrder = ['food_id'=> $food->id , 'user_id'=>$user_id ,'count'=>(int)$input[$food->id] ];
-                    staticorder::create($StOrder);
-                }
-            }
-        }
 
-    }
-    public function destroyStatic($id){
-        $order = Staticorder::findOrFail($id);
-        $order->delete();
-        return redirect ('/order');
-    }
+
 }
