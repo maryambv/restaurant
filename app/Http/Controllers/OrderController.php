@@ -13,7 +13,12 @@ class OrderController extends Controller
     public function index()
     {
         $user=Auth::user();
-        $orders=Order::where([['status', 'not_pay'], ['user_id', $user->id]])->orderBy('day')->get();
+        $orders=Order::where(
+            [
+                ['status', 'not_pay'],
+                ['user_id', $user->id]
+            ]
+        )->orderBy('day')->get();
         $user_credit= $user->credit;
         $total=0;
         foreach ($orders as $order) {
@@ -32,24 +37,52 @@ class OrderController extends Controller
         $user_id = Auth::user()->id;
         $menus = Menu::where('day', $input['day'])->get();
         $staticMenus= Staticmenu::all();
-        $order= Order::where([['day', $input['day']], ['user_id', $user_id]])->get();
+        $order= Order::where(
+            [
+                ['day', $input['day']],
+                ['user_id', $user_id]
+            ]
+        )->get();
 
         if (count($order)==0) {
             foreach ($menus as $menu) {
                 $food=$menu->food;
                 if ($input[$food->id]) {
-                    $order=Order::where([['user_id', $user_id], ['day', $input['day']]]);
+                    $order=Order::where(
+                        [
+                            ['user_id', $user_id],
+                            ['day', $input['day']]
+                        ]
+                    );
                     $order->delete();
-                    $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ,'day'=>$input['day']];
+                    $order = [
+                        'food_id'=> $food->id,
+                        'user_id'=>$user_id,
+                        'status'=>"not_pay",
+                        'count'=>(int)$input[$food->id],
+                        'day'=>$input['day']
+                    ];
                     Order::create($order);
                 }
             }
             foreach ($staticMenus as $menu) {
                 $food=$menu->food;
                 if ($input[$food->id]) {
-                    $order=Order::where([['user_id', $user_id], ['food_id', $food->id], ['day', $input['day']]]);
+                    $order=Order::where(
+                        [
+                            ['user_id', $user_id],
+                            ['food_id', $food->id],
+                            ['day', $input['day']]
+                        ]
+                    );
                     $order->delete();
-                    $order = ['food_id'=> $food->id , 'user_id'=>$user_id , 'status'=>"not_pay", 'count'=>(int)$input[$food->id] ,'day'=>$input['day']];
+                    $order = [
+                        'food_id'=> $food->id,
+                        'user_id'=>$user_id,
+                        'status'=>"not_pay",
+                        'count'=>(int)$input[$food->id],
+                        'day'=>$input['day']
+                    ];
                     Order::create($order);
                 }
             }
@@ -87,14 +120,24 @@ class OrderController extends Controller
     public function showOrder()
     {
         $user_id=Auth::user()->id;
-        $orders= Order::where([['user_id', $user_id], ['status', 'not_pay']])->with(["food"])->orderBy('day')->get();
+        $orders= Order::where(
+            [
+                ['user_id', $user_id],
+                ['status', 'not_pay']
+            ]
+        )->with(["food"])->orderBy('day')->get();
         return $orders;
     }
 
     public function getTotal()
     {
         $user_id=Auth::user()->id;
-        $not_pay_orders=Order::where([['status', 'not_pay'], ['user_id', $user_id]])->get();
+        $not_pay_orders=Order::where(
+            [
+                ['status', 'not_pay'],
+                ['user_id', $user_id]
+            ]
+        )->get();
         $total=0;
         foreach ($not_pay_orders as $order) {
             $total= $total+($order->count * $order->food->price);
@@ -105,7 +148,12 @@ class OrderController extends Controller
     public function show()
     {
         $user_id=Auth::user()->id;
-        $orders=Order::where([['status', 'pay'], ['user_id', $user_id]])->orderBy('day')->get();
+        $orders=Order::where(
+            [
+                ['status', 'pay'],
+                ['user_id', $user_id]
+            ]
+        )->orderBy('day')->get();
         return view('order.show', compact('orders'));
     }
 }

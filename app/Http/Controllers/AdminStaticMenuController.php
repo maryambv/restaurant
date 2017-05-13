@@ -13,15 +13,15 @@ class AdminStaticMenuController extends Controller
 {
     public function index()
     {
-        $foods=Food::lists('name','id');
+        $foods=Food::lists('name', 'id');
         $static_menus=Staticmenu::all();
-        return view('admin.menus.static',compact('foods','static_menus'));
+        return view('admin.menus.static', compact('foods', 'static_menus'));
     }
 
     public function store(Request $request)
     {
-        $menus = DB::select('select * from staticmenus where food_id = ?', [$request->food_id ]);
-        if (count($menus) ==0){
+        $menus = Staticmenu::where('food_id', $request->food_id)->get();
+        if (count($menus) ==0) {
             Staticmenu::create($request->all());
         }
         return redirect('admin/static/menu');

@@ -97,7 +97,7 @@
                                 </tr>
                             @endforeach
 
-                            @foreach($stmenus as $menu)
+                            @foreach($stMenus as $menu)
                                 <td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
                                 <td class="price">{{$menu->food->price}}$</td>
                                 @if($can_order)

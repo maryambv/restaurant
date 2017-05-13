@@ -11,23 +11,29 @@ use Illuminate\Support\Facades\Auth;
 class AdminMediaController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
 
         $photos=Photo::all();
-        return view('admin.media.index',compact('photos'));
+        return view('admin.media.index', compact('photos'));
     }
-    public function create(){
+
+    public function create()
+    {
         return view('admin.media.create');
     }
-    public function store(Request $request){
 
+    public function store(Request $request)
+    {
         $file=$request->file('file');
         $name= time().$file->getClientOriginalName();
-        $file->move('images',$name);
+        $file->move('images', $name);
         Photo::create(['file'=>$name]);
 
     }
-    public function destroy($id){
+
+    public function destroy($id)
+    {
         $photo=Photo::find($id);
         unlink(public_path().$photo->file);
         $photo->delete();
@@ -35,9 +41,9 @@ class AdminMediaController extends Controller
         if ($user->role->name == 'Administrator') {
 
              return redirect('admin/media');
-         }else{
+        } else {
             return redirect('user');
-         }
+        }
         
     }
 }

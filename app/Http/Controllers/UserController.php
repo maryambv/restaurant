@@ -29,7 +29,13 @@ class UserController extends Controller
         if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
-            Photo::create(['file' => $name, 'imageable_id' => $user->id, 'imageable_type' => 'App\User']);
+            Photo::create(
+                [
+                    'file' => $name,
+                    'imageable_id' => $user->id,
+                    'imageable_type' => 'App\User'
+                ]
+            );
         }
 
         if (Auth::attempt(["email" => $user->email, 'password' => $request->password])) {
@@ -41,34 +47,34 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($user->role->name == 'Administrator') {
-
-            $users=User::all();
-            return view('admin.users.index',compact('users'));
-        }
-        else{
-
+            $users = User::all();
+            return view('admin.users.index', compact('users'));
+        } else {
             $today = carbon::today()->dayOfWeek;
-            return $this->show_menu($today);
+            return $this->showMenu($today);
         }
     }
 
-    public function show_menu($day)
+    public function showMenu($day)
     {
-        if ($day>6){
+        if ($day>6) {
             return $this->index();
         }
         $user = Auth::user();
         $date= carbon::now();
-        $orders  = Order::where('user_id',$user->id)->get();
+        $orders  = Order::where('user_id', $user->id)->get();
         $can_order= true;
         foreach ($orders as $order) {
-            if($order->created_at->toDateString() == $date->toDateString() and $order->day== $day ) {
+            if ($order->created_at->toDateString() == $date->toDateString() and $order->day== $day) {
                 $can_order = false;
             }
         }
         $menus = Menu::where('day', $day)->get();
-        $stmenus= Staticmenu::all();
-        return view('user.index', compact('user', 'menus','can_order','day','stmenus'));
+        $stMenus= Staticmenu::all();
+        return view(
+            'user.index',
+            compact('user', 'menus', 'can_order', 'day', 'stMenus')
+        );
     }
 
     public function create()
@@ -93,10 +99,15 @@ class UserController extends Controller
             $input = $request->all();
         }
         if ($file = $request->file('photo_id')) {
-
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
-            Photo::create(['file' => $name, 'imageable_id' => $user_id, 'imageable_type' => 'App\User']);
+            Photo::create(
+                [
+                    'file' => $name,
+                    'imageable_id' => $user_id,
+                    'imageable_type' => 'App\User'
+                ]
+            );
         }
         $user->update($input);
         $user->save();
@@ -117,10 +128,10 @@ class UserController extends Controller
         $user->credit = $user->credit +$request->price;
         $user->save();
         return redirect('user');
-
     }
-    public function editCredit(){
+    public function editCredit()
+    {
         $user = Auth::user();
-        return view('user.credit',compact('user'));
+        return view('user.credit', compact('user'));
     }
 }
