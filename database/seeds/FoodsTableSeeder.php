@@ -13,8 +13,8 @@ class FoodsTableSeeder extends Seeder
     public function run()
     {
         $foods = [];
-        for ($x = 0; $x < 5; $x++) {
-            $foods[$x] = [
+        for ($f = 0; $f < 5; $f++) {
+            $foods[$f] = [
                 'name' => str_random(10),
                 'category_id' => 2,
                 'price' => 10,

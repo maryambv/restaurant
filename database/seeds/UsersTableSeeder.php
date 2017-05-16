@@ -1,6 +1,10 @@
 <?php
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+
+require_once 'vendor/autoload.php';
+
 
 class UsersTableSeeder extends Seeder
 {
@@ -9,15 +13,17 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
+        $faker = Factory::create('en_US');
         DB::table('users')->insert([
-            'name' => str_random(10),
-            'email' => str_random(10) . '@gmail.com',
+            'name' => $faker->firstName('female'),
+            'email' => $faker->email,
             'password' => bcrypt('secret'),
             'role_id' => 2,
             'credit' => 0,
-            'created_at' => '2017-04-29 15:00:55',
+            'created_at' => $faker->dateTime,
             'updated_at' => '2017-04-30 15:00:55',
         ]);
     }
