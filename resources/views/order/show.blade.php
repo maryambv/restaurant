@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="col-md-offset-2 form-group">
-        <h1>Order</h1>
+        <h1>Paid Order</h1>
         @if(count($orders)>0)
             <table class="table">
                 <thead>

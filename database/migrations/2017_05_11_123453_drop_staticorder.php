@@ -12,7 +12,9 @@ class DropStaticorder extends Migration
      */
     public function up()
     {
-        Schema::drop('staticorders');
+        if (Schema::hasTable('staticorders')) {
+            Schema::drop('staticorders');
+        }
     }
 
     /**

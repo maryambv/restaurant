@@ -7,7 +7,6 @@
         <p class="bg-danger">{{Session('delete_user')}}</p>
 
     @endif
-    <a href="/">About Us</a>
     <h1>Users</h1>
     <table class="table">
         <thead>

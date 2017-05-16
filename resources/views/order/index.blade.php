@@ -8,7 +8,7 @@
 @endsection
 @section('content')
     <div class="col-md-offset-2 form-group">
-        <h1>Order</h1>
+        <h1>Not Paid Order</h1>
         <table class="table">
             <thead>
             <tr>
@@ -62,7 +62,9 @@
             </div>
             {!! Form::close() !!}
         @else
-            <a href="{{route('user.credit')}}" class="form-group btn btn-primary">Charge</a>
+            <div class="form-group">
+                <a href="{{route('user.charge.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
+            </div>
         @endif
     </div>
 

@@ -31,6 +31,8 @@ class CreateStaticordersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('staticorders');
+        if (Schema::hasTable('staticorders')) {
+            Schema::drop('staticorders');
+        }
     }
 }

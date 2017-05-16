@@ -17,8 +17,8 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
 
-//Route::group(
-//    ['middleware' => 'admin'], function () {
+Route::group(
+    ['middleware' => 'admin'], function () {
     Route::resource('admin/users', 'AdminUserController');
     Route::resource('admin/foods', 'AdminFoodController');
     Route::resource('admin/categories', 'AdminCategoryController');
@@ -29,8 +29,7 @@ Route::get('/', 'HomeController@index');
         ['as' => 'admin.order.index',
             'uses' => "AdminOrderController@index"]
     );
-
-//});
+});
 
 
 Route::get(
