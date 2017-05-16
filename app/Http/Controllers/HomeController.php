@@ -21,9 +21,8 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        Session::flash('welcome_user', $user->name ." welcome.");
+        Session::flash('welcome_user', $user->name . " welcome.");
         return redirect('/user');
-
     }
 
 }

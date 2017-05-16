@@ -12,7 +12,7 @@ class AdminCategoryController extends Controller
 
     public function index()
     {
-        $categories= Category::all();
+        $categories = Category::all();
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -37,7 +37,7 @@ class AdminCategoryController extends Controller
 
     public function edit($id)
     {
-        $category=Category::find($id);
+        $category = Category::find($id);
         return view('admin.categories.edit', compact('category'));
     }
 

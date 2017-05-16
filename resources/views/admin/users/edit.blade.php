@@ -47,7 +47,7 @@
                 {!! Form::label('photo_id', 'Photo: ') !!}
                 <img height="50" id="photo_id"/>
                 <script>
-                    var loadFile = function(event) {
+                    var loadFile = function (event) {
                         var output = document.getElementById('photo_id');
                         output.src = URL.createObjectURL(event.target.files[0]);
                     };
@@ -73,5 +73,5 @@
     <div class="row">
         @include('includes.form_error')
     </div>
-    
+
 @endsection

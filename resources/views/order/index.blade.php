@@ -4,7 +4,7 @@
     <li><a href="{{ url('/user') }}">Home</a></li>
 @endsection
 @section('order')
-    <li> <a href="{{route("order.show")}}">Paid Orders</a></li>
+    <li><a href="{{route("order.show")}}">Paid Orders</a></li>
 @endsection
 @section('content')
     <div class="col-md-offset-2 form-group">
@@ -42,9 +42,9 @@
                         <td>{{$order->count * $order->food->price}}</td>
                         <td>
                             {!! Form::open(['method'=>'DELETE' ,'action'=>['OrderController@destroy',$order->id]])!!}
-                                <div class="form-group">
-                                    {!! Form::submit('Delete', ['class'=>'btn btn-danger col-sm-6']) !!}
-                                </div>
+                            <div class="form-group">
+                                {!! Form::submit('Delete', ['class'=>'btn btn-danger col-sm-6']) !!}
+                            </div>
                             {!! Form::close() !!}
                         </td>
                     </tr>
@@ -54,12 +54,12 @@
         </table>
         <h2> Total: {{$total}}</h2>
         <h2> Your credit: {{$user_credit}}</h2>
-       @if($user_credit - $total>0)
+        @if($user_credit - $total>0)
 
             {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@pay' , 'class'=>'order_add'])!!}
-                <div class="form-group">
-                    {!! Form::submit('Pay', ['class'=>'btn btn-primary col-sm-6']) !!}
-                </div>
+            <div class="form-group">
+                {!! Form::submit('Pay', ['class'=>'btn btn-primary col-sm-6']) !!}
+            </div>
             {!! Form::close() !!}
         @else
             <a href="{{route('user.credit')}}" class="form-group btn btn-primary">Charge</a>

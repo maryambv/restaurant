@@ -4,7 +4,7 @@
 @endsection
 
 @section('order')
-    <li> <a href="{{route("order.show")}}">Paid Orders</a></li>
+    <li><a href="{{route("order.show")}}">Paid Orders</a></li>
 @endsection
 
 @section('panel')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <div class= 'row'>
+    <div class='row'>
         @if($user)
             <div class="col-md-offset-2 form-group">
                 @foreach($user->photo as $photo)
@@ -25,9 +25,9 @@
                 @endforeach
 
                 Credit: {{$user->credit}}
-                 <div class="form-group">
-                     <a href="{{route('user.charge.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
-                 </div>
+                <div class="form-group">
+                    <a href="{{route('user.charge.credit')}}" class="form-group btn btn-primary">Charge Credit</a>
+                </div>
             </div>
         @endif
 
@@ -52,81 +52,65 @@
                     <h1>Saturday</h1>
                 @endif
 
-                {{--{!! Form::open(['method'=>'POST' ,'action'=>'OrderController@storeStatic'])!!}--}}
-                    {{--<table class="table">--}}
-                        {{--<thead>--}}
-                        {{--<th>All Day</th>--}}
-                        {{--</thead>--}}
-                        {{--<tbody>--}}
-                        {{--@foreach($stmenus as $menu)--}}
-                            {{--<td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>--}}
-                            {{--<td class="price">{{$menu->food->price}}$</td>--}}
-                            {{--<td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'static_menu','price'=>$menu->food->price))!!}</td>--}}
-
-                        {{--@endforeach--}}
-                        {{--</tbody>--}}
-                    {{--</table>--}}
-                    {{--<div class="form-group row">--}}
-                        {{--{!! Form::submit('All Day', ['class'=>'btn btn-primary col-sm-2',]) !!}--}}
-                    {{--</div>--}}
-                {{--{!! Form::close() !!}--}}
-
-
                 {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
-                    <table class="table">
-                        <thead>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Photo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($menus as $menu)
                         <tr>
-                            <th>Food</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Photo</th>
+                            <td>{{$menu->food->name}}</td>
+                            <td>{{$menu->food->category->name}}</td>
+                            <td class="price">{{$menu->food->price}}$</td>
+                            <td><img height="70"
+                                     src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}"
+                                     alt=" "></td>
+                            @if($can_order)
+                                <td>{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'select_item','price'=>$menu->food->price))!!}</td>
+                            @endif
+                            {{ Form::hidden('day', $day) }}
+
                         </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($menus as $menu)
-                                <tr>
-                                    <td>{{$menu->food->name}}</td>
-                                    <td>{{$menu->food->category->name}}</td>
-                                    <td class="price">{{$menu->food->price}}$</td>
-                                    <td><img height="70" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                                    @if($can_order)
-                                         <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'select_item','price'=>$menu->food->price))!!}</td>
-                                    @endif
-                                    {{ Form::hidden('day', $day) }}
+                    @endforeach
 
-                                </tr>
-                            @endforeach
-
-                            @foreach($stMenus as $menu)
-                                <td><img height="40" src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}" alt=" "></td>
-                                <td class="price">{{$menu->food->price}}$</td>
-                                @if($can_order)
-                                <td >{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'extraF','price'=>$menu->food->price))!!}</td>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="form-group row">
-                            {!! Form::submit('Next Day', ['class'=>'btn btn-based col-sm-6 ', 'name' => 'submitbutton']) !!}
+                    @foreach($stMenus as $menu)
+                        <td><img height="40"
+                                 src="{{$menu->food->photo->first() ? $menu->food->photo->first()->file :'http://placehold.it/200x200'}}"
+                                 alt=" "></td>
+                        <td class="price">{{$menu->food->price}}$</td>
+                        @if($can_order)
+                            <td>{!! Form::select($menu->food->id,range(0,20),null,array('class'=>'extraF','price'=>$menu->food->price))!!}</td>
+                        @endif
+                    @endforeach
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    {!! Form::submit('Next Day', ['class'=>'btn btn-based col-sm-6 ', 'name' => 'submitbutton']) !!}
 
 
-                    </div>
-                    <div class="form-group row">
-                        {!! Form::submit('Pay or Edit',['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
-                        {!! Form::label("",null,array('class'=>'cost col-sm-6')) !!}
-                    </div>
-                    <a  class="orderList form-group row">Order List</a>
+                </div>
+                <div class="form-group row">
+                    {!! Form::submit('Pay or Edit',['class'=>'btn btn-primary col-sm-6', 'name' => 'submitbutton']) !!}
+                    {!! Form::label("",null,array('class'=>'cost col-sm-6')) !!}
+                </div>
+                <a class="orderList form-group row">Order List</a>
 
                 {!! Form::close() !!}
-             @endif
-            <table  class="table" id="table_show"></table>
+            @endif
+            <table class="table" id="table_show"></table>
             <h1 class="order_status"></h1>
         </div>
 
     </div>
 
     <div class="row">
-         @include('includes.form_error')
+        @include('includes.form_error')
     </div>
 
 

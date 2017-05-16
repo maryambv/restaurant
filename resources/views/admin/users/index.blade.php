@@ -7,6 +7,7 @@
         <p class="bg-danger">{{Session('delete_user')}}</p>
 
     @endif
+    <a href="/">About Us</a>
     <h1>Users</h1>
     <table class="table">
         <thead>
@@ -25,7 +26,9 @@
             @foreach($users as $user)
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td><img height="50" src="{{$user->photo->first() ? $user->photo->first()->file :'http://placehold.it/400x400'}}" alt=" "></td>
+                    <td><img height="50"
+                             src="{{$user->photo->first() ? $user->photo->first()->file :'http://placehold.it/400x400'}}"
+                             alt=" "></td>
                     <td><a href="{{route('admin.users.edit', $user->id)}}">{{$user->name}}</a></td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->role->name}}</td>
@@ -36,7 +39,7 @@
         @endif
         </tbody>
     </table>
-        <div class="row">
+    <div class="row">
         @include('includes.form_error')
     </div>
 @stop

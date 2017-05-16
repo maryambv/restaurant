@@ -16,7 +16,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('category_id', 'Role: ') !!}
+        {!! Form::label('category_id', 'Category: ') !!}
         {!! Form::select ('category_id',$category, null, ['class'=>'form-control']) !!}
     </div>
 
@@ -25,7 +25,7 @@
         {!! Form::label('photo_id', 'Photo: ') !!}
         <img height="50" id="photo_id"/>
         <script>
-            var loadFile = function(event) {
+            var loadFile = function (event) {
                 var output = document.getElementById('photo_id');
                 output.src = URL.createObjectURL(event.target.files[0]);
             };

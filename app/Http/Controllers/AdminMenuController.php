@@ -15,8 +15,8 @@ class AdminMenuController extends Controller
 {
     public function index()
     {
-        $foods=Food::lists('name', 'id');
-        $menus=Menu::orderBy('day')->get();
+        $foods = Food::lists('name', 'id');
+        $menus = Menu::orderBy('day')->get();
 
 
         return view('admin.menus.index', compact('foods', 'menus'));
@@ -26,12 +26,12 @@ class AdminMenuController extends Controller
     {
         $menus = Menu::where(
             [
-                ['food_id',$request->food_id],
+                ['food_id', $request->food_id],
                 ['day', $request->day]
             ]
         )->get();
 
-        if (count($menus) ==0) {
+        if (count($menus) == 0) {
             Menu::create($request->all());
         }
         return redirect('admin/menu');
@@ -39,8 +39,8 @@ class AdminMenuController extends Controller
 
     public function edit($id)
     {
-        $menu=Menu::findOrFail($id);
-        $foods=Food::lists('name', 'id')->all();
+        $menu = Menu::findOrFail($id);
+        $foods = Food::lists('name', 'id')->all();
         return view('admin.menus.edit', compact('menu', 'foods'));
     }
 
@@ -49,11 +49,11 @@ class AdminMenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menus = Menu::where(
             [
-                ['food_id',$request->food_id],
+                ['food_id', $request->food_id],
                 ['day', $request->day]
             ]
         )->get();
-        if (count($menus) ==0) {
+        if (count($menus) == 0) {
             $menu->update($request->all());
             $menu->save();
         } else {

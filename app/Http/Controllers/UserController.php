@@ -57,20 +57,20 @@ class UserController extends Controller
 
     public function showMenu($day)
     {
-        if ($day>6) {
+        if ($day > 6) {
             return $this->index();
         }
         $user = Auth::user();
-        $date= carbon::now();
-        $orders  = Order::where('user_id', $user->id)->get();
-        $can_order= true;
+        $date = carbon::now();
+        $orders = Order::where('user_id', $user->id)->get();
+        $can_order = true;
         foreach ($orders as $order) {
-            if ($order->created_at->toDateString() == $date->toDateString() and $order->day== $day) {
+            if ($order->created_at->toDateString() == $date->toDateString() and $order->day == $day) {
                 $can_order = false;
             }
         }
         $menus = Menu::where('day', $day)->get();
-        $stMenus= Staticmenu::all();
+        $stMenus = Staticmenu::all();
         return view(
             'user.index',
             compact('user', 'menus', 'can_order', 'day', 'stMenus')
@@ -125,10 +125,11 @@ class UserController extends Controller
     public function credit(ChargeCredit $request)
     {
         $user = Auth::user();
-        $user->credit = $user->credit +$request->price;
+        $user->credit = $user->credit + $request->price;
         $user->save();
         return redirect('user');
     }
+
     public function editCredit()
     {
         $user = Auth::user();
