@@ -52,9 +52,9 @@
             @endif
             </tbody>
         </table>
-        <h2> Total: {{$total}}</h2>
+        <h2> Total: {{$totalCost}}</h2>
         <h2> Your credit: {{$user_credit}}</h2>
-        @if($user_credit - $total>0)
+        @if($user_credit - $totalCost>0)
 
             {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@pay' , 'class'=>'order_add'])!!}
             <div class="form-group">

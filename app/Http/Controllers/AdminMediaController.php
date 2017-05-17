@@ -38,9 +38,9 @@ class AdminMediaController extends Controller
         $user = Auth::user();
         if ($user->role->name == 'Administrator') {
             return redirect('admin/media');
-        } else {
-            return redirect('user');
         }
+        return redirect('user');
+
 
     }
 }

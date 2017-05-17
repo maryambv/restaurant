@@ -80,8 +80,8 @@ Route::group(
     );
     Route::post(
         'user/credit',
-        ['as' => 'user.credit',
-            'uses' => "UserController@credit"]
+        ['as' => 'user.add.credit',
+            'uses' => "UserController@addCredit"]
     );
 
     Route::get(
@@ -91,7 +91,7 @@ Route::group(
     );
     Route::get('/ordered', 'OrderController@showOrder');
 
-    Route::get('/total', 'OrderController@getTotal');
+    Route::get('/total', 'OrderController@getTotalCost');
 
     Route::get(
         'user/menu/{day}',

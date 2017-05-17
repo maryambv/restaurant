@@ -20,12 +20,9 @@ class OrderController extends Controller
             ]
         )->orderBy('day')->get();
         $user_credit = $user->credit;
-        $total = 0;
-        foreach ($orders as $order) {
-            $total = $total + ($order->count * $order->food->price);
-        }
-        if ($total > 0) {
-            return view('order.index', compact('orders', 'total', 'user_credit'));
+        $totalCost = $this->getTotalCost();
+        if ($totalCost > 0) {
+            return view('order.index', compact('orders', 'totalCost', 'user_credit'));
         }
         return $this->show();
     }
@@ -34,7 +31,7 @@ class OrderController extends Controller
     {
         $status = $request->submitbutton;
         $input = $request->all();
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         $menus = Menu::where('day', $input['day'])->get();
         $staticMenus = Staticmenu::all();
         $order = Order::where(
@@ -48,13 +45,12 @@ class OrderController extends Controller
             foreach ($menus as $menu) {
                 $food = $menu->food;
                 if ($input[$food->id]) {
-                    $order = Order::where(
+                    Order::where(
                         [
                             ['user_id', $user_id],
                             ['day', $input['day']]
                         ]
-                    );
-                    $order->delete();
+                    )->delete();
                     $order = [
                         'food_id' => $food->id,
                         'user_id' => $user_id,
@@ -68,14 +64,13 @@ class OrderController extends Controller
             foreach ($staticMenus as $menu) {
                 $food = $menu->food;
                 if ($input[$food->id]) {
-                    $order = Order::where(
+                    Order::where(
                         [
                             ['user_id', $user_id],
                             ['food_id', $food->id],
                             ['day', $input['day']]
                         ]
-                    );
-                    $order->delete();
+                    )->delete();
                     $order = [
                         'food_id' => $food->id,
                         'user_id' => $user_id,
@@ -90,9 +85,8 @@ class OrderController extends Controller
         if ($status == 'Next Day') {
             $day = ($input['day'] + 1) % 7;
             return redirect('/user/menu/' . $day);
-        } else {
-            return redirect('/order');
         }
+        return redirect('/order');
     }
 
     public function pay()
@@ -129,7 +123,7 @@ class OrderController extends Controller
         return $orders;
     }
 
-    public function getTotal()
+    public function getTotalCost()
     {
         $user_id = Auth::user()->id;
         $not_pay_orders = Order::where(
@@ -140,7 +134,7 @@ class OrderController extends Controller
         )->get();
         $total = 0;
         foreach ($not_pay_orders as $order) {
-            $total = $total + ($order->count * $order->food->price);
+            $total += ($order->count * $order->food->price);
         }
         return $total;
     }

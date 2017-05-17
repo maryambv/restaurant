@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="col-sm-6 col-lg-offset-3 row">
-        {!! Form::open(['method'=>'POST' ,'action'=>'UserController@credit'])!!}
+        {!! Form::open(['method'=>'POST' ,'action'=>'UserController@addCredit'])!!}
         <div class="form-group">
             {!! Form::label('price', 'Charge: ') !!}
             {!! Form::number('price',null,['class' => 'form-control','step'=>'any']) !!}

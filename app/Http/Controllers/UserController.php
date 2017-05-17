@@ -27,15 +27,7 @@ class UserController extends Controller
         $user = User::create($input);
 
         if ($file = $request->file('photo_id')) {
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            Photo::create(
-                [
-                    'file' => $name,
-                    'imageable_id' => $user->id,
-                    'imageable_type' => 'App\User'
-                ]
-            );
+           $this->savePhoto($file,$user);
         }
 
         if (Auth::attempt(["email" => $user->email, 'password' => $request->password])) {
@@ -43,16 +35,27 @@ class UserController extends Controller
         }
     }
 
+    private function savePhoto($file,$userId)
+    {
+        $name = time() . $file->getClientOriginalName();
+        $file->move('images', $name);
+        Photo::create(
+            [
+                'file' => $name,
+                'imageable_id' => $userId->id,
+                'imageable_type' => 'App\User'
+            ]
+        );
+    }
     public function index()
     {
         $user = Auth::user();
         if ($user->role->name == 'Administrator') {
             $users = User::all();
             return view('admin.users.index', compact('users'));
-        } else {
-            $today = carbon::today()->dayOfWeek;
-            return $this->showMenu($today);
         }
+        $today = carbon::today()->dayOfWeek;
+        return $this->showMenu($today);
     }
 
     public function showMenu($day)
@@ -99,15 +102,7 @@ class UserController extends Controller
             $input = $request->all();
         }
         if ($file = $request->file('photo_id')) {
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            Photo::create(
-                [
-                    'file' => $name,
-                    'imageable_id' => $user_id,
-                    'imageable_type' => 'App\User'
-                ]
-            );
+            $this->savePhoto($file,$user);
         }
         $user->update($input);
         $user->save();
@@ -122,7 +117,7 @@ class UserController extends Controller
         return redirect('');
     }
 
-    public function credit(ChargeCredit $request)
+    public function addCredit(ChargeCredit $request)
     {
         $user = Auth::user();
         $user->credit = $user->credit + $request->price;

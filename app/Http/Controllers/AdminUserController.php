@@ -32,18 +32,23 @@ class AdminUserController extends Controller
         $user = User::create($input);
 
         if ($file = $request->file('photo_id')) {
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            Photo::create(
-                [
-                    'file' => $name,
-                    'imageable_id' => $user->id,
-                    'imageable_type' => 'App\User'
-                ]
-            );
+            $this->savePhoto($file, $user);
         }
 
         return redirect('admin/users');
+    }
+
+    private function savePhoto($file, $user)
+    {
+        $name = time() . $file->getClientOriginalName();
+        $file->move('images', $name);
+        Photo::create(
+            [
+                'file' => $name,
+                'imageable_id' => $user->id,
+                'imageable_type' => 'App\User'
+            ]
+        );
     }
 
     public function edit($id)
@@ -63,16 +68,7 @@ class AdminUserController extends Controller
         }
 
         if ($file = $request->file('photo_id')) {
-
-            $name = time() . $file->getClientOriginalName();
-            $file->move('images', $name);
-            Photo::create(
-                [
-                    'file' => $name,
-                    'imageable_id' => $id,
-                    'imageable_type' => 'App\User'
-                ]
-            );
+            $this->savePhoto($file, $user);
         }
         $user->update($input);
         $user->save();
