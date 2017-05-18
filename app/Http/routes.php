@@ -99,3 +99,5 @@ Route::group(
             'uses' => "UserController@showMenu"]
     );
 });
+
+Route::get('/calendar', "HomeController@showDate");

@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Welcome</div>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-                <div class="panel-body">
-                    Your Application's Landing Page.
-                </div>
-            </div>
-        </div>
+    <div class="col-md-offset-2 form-group w3-container">
+        @if(count($passDays)>0)
+            @foreach($passDays as $passDay)
+                <ul class="w3-ul">
+                    <li class="w3-hover-red">{{$passDay}}</li>
+                </ul>
+            @endforeach
+            <p class="w3-hover-blue">{{$today}}</p>
+        @endif
     </div>
-</div>
-@endsection
+
+@stop
