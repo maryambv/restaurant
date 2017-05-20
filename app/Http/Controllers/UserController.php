@@ -8,6 +8,7 @@ use App\Order;
 use App\Photo;
 use App\Staticmenu;
 use App\User;
+use App\Utils\Calendar\MyCalendar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class UserController extends Controller
         $user = User::create($input);
 
         if ($file = $request->file('photo_id')) {
-           $this->savePhoto($file,$user);
+            $this->savePhoto($file, $user);
         }
 
         if (Auth::attempt(["email" => $user->email, 'password' => $request->password])) {
@@ -35,7 +36,7 @@ class UserController extends Controller
         }
     }
 
-    private function savePhoto($file,$userId)
+    private function savePhoto($file, $userId)
     {
         $name = time() . $file->getClientOriginalName();
         $file->move('images', $name);
@@ -47,6 +48,7 @@ class UserController extends Controller
             ]
         );
     }
+
     public function index()
     {
         $user = Auth::user();
@@ -55,20 +57,29 @@ class UserController extends Controller
             return view('admin.users.index', compact('users'));
         }
         $today = carbon::today()->dayOfWeek;
-        return $this->showMenu($today);
+
+        return $this->showMenu($today, false);
     }
 
-    public function showMenu($day)
+    public function showMenu($day, $add = true)
     {
         if ($day > 6) {
             return $this->index();
         }
+
+        if ($add) {
+            $weekDay = MyCalendar::addDay($day);
+        } else {
+            $weekDay = MyCalendar::today();
+        }
+
         $user = Auth::user();
-        $date = carbon::now();
+//        $date = carbon::now();
         $orders = Order::where('user_id', $user->id)->get();
         $can_order = true;
+        //$order->created_at->toDateString() == $date->toDateString() and
         foreach ($orders as $order) {
-            if ($order->created_at->toDateString() == $date->toDateString() and $order->day == $day) {
+            if ($order->day == $day) {
                 $can_order = false;
             }
         }
@@ -76,7 +87,7 @@ class UserController extends Controller
         $stMenus = Staticmenu::all();
         return view(
             'user.index',
-            compact('user', 'menus', 'can_order', 'day', 'stMenus')
+            compact('user', 'menus', 'can_order', 'day', 'stMenus', 'weekDay')
         );
     }
 
@@ -102,7 +113,7 @@ class UserController extends Controller
             $input = $request->all();
         }
         if ($file = $request->file('photo_id')) {
-            $this->savePhoto($file,$user);
+            $this->savePhoto($file, $user);
         }
         $user->update($input);
         $user->save();

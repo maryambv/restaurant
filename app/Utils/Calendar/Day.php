@@ -9,9 +9,7 @@
 namespace App\Utils\Calendar;
 
 
-
-
-use Jenssegers\Date\Date;
+use Morilog\Jalali\jDateTime;
 
 class Day
 {
@@ -19,27 +17,19 @@ class Day
 
     /**
      * MyCalendar constructor.
+     *
+     * @param day $day
      */
     public function __construct($day)
     {
-
-        $this->day = Date::now()->format('l j F Y H:i:s'); ;
+        $this->calendar = new jDateTime();
+        $this->day = $day;
     }
 
-    public function today()
+    public function convertToJalali()
     {
-
-        return $this->day;
+        return $this->calendar->date("l j F ", $this->day, 'Asia/Tehran');
     }
 
-    public function weekDays()
-    {
-        $day = $this->calendar->date("w");
-        $passDays = [];
-        for ($i = 0; $i < intval($day); $i++) {
-            $passDays[$i] = $this->calendar->getWeekName($i);
-        }
-        return $passDays;
-    }
 
 }

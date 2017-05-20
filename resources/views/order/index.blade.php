@@ -25,19 +25,19 @@
                         <td>{{$order->food->name}}</td>
                         <td>{{$order->count}}</td>
                         <td> @if ($order->day==0)
-                                Sunday
+                                یکشنبه
                             @elseif ($order->day==1)
-                                Monday
+                                دوشنبه
                             @elseif ($order->day==2)
-                                Tuesday
+                                سه شنبه
                             @elseif ($order->day==3)
-                                Wednesday
+                                چهاشنبه
                             @elseif ($order->day==4)
-                                Thursday
+                                پنجشنبه
                             @elseif ($order->day==5)
-                                Friday
+                                جمعه
                             @elseif ($order->day==6)
-                                Saturday
+                                شنبه
                             @endif</td>
                         <td>{{$order->count * $order->food->price}}</td>
                         <td>

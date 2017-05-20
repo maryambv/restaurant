@@ -36,21 +36,22 @@
                 <p class="bg-success">{{Session('welcome_user')}}</p>
             @endif
             @if(count($menus)>0)
-                @if ($day==0)
-                    <h1>Sunday</h1>
-                @elseif ($day==1)
-                    <h1>Monday</h1>
-                @elseif ($day==2)
-                    <h1>Tuesday</h1>
-                @elseif ($day==3)
-                    <h1>Wednesday</h1>
-                @elseif ($day==4)
-                    <h1>Thursday</h1>
-                @elseif ($day==5)
-                    <h1>Friday</h1>
-                @elseif ($day==6)
-                    <h1>Saturday</h1>
-                @endif
+                <h3>{{$weekDay}}</h3>
+                {{--@if ($day==0)--}}
+                {{--<h1>Sunday</h1>--}}
+                {{--@elseif ($day==1)--}}
+                {{--<h1>Monday</h1>--}}
+                {{--@elseif ($day==2)--}}
+                {{--<h1>Tuesday</h1>--}}
+                {{--@elseif ($day==3)--}}
+                {{--<h1>Wednesday</h1>--}}
+                {{--@elseif ($day==4)--}}
+                {{--<h1>Thursday</h1>--}}
+                {{--@elseif ($day==5)--}}
+                {{--<h1>Friday</h1>--}}
+                {{--@elseif ($day==6)--}}
+                {{--<h1>Saturday</h1>--}}
+                {{--@endif--}}
 
                 {!! Form::open(['method'=>'POST' ,'action'=>'OrderController@store'])!!}
                 <table class="table">

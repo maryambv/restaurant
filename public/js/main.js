@@ -9,7 +9,7 @@ function main() {
                 url: '/ordered',
                 success:function(res_data)
                 {
-                    var dowMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    var dowMap = ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه','پنجشنبه', 'جمعه', 'شنبه'];
                     if(res_data!='')
                     {
                         var getting_res=res_data;

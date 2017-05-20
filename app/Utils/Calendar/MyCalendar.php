@@ -8,8 +8,9 @@
 
 namespace App\Utils\Calendar;
 
-
-use Morilog\Jalali\jDateTime;
+use Carbon\Carbon;
+use App\Utils\Calendar\Day;
+use App\Utils\Calendar\Week;
 
 
 class MyCalendar
@@ -21,23 +22,27 @@ class MyCalendar
      */
     public function __construct()
     {
-        $this->calendar = new jDateTime(true, true, 'Asia/Tehran');
+
     }
 
-    public function today()
+    public static function today()
     {
-
-        return $this->calendar->date("l j F Y ");
+        $today = Carbon::now();
+        $day = new Day($today);
+        return $day->convertToJalali();
     }
 
-    public function weekDays()
+    public function week($state = 0)
     {
-        $day = $this->calendar->date("w");
-        $passDays = [];
-        for ($i = 0; $i < intval($day); $i++) {
-            $passDays[$i] = $this->calendar->getWeekName($i);
-        }
-        return $passDays;
+        $week = new Week($state);
+        return $week->getDays();
+    }
+
+    public static function addDay($number)
+    {
+        $day = Carbon::now()->addDay($number + 1);
+        $newDay = new Day($day);
+        return $newDay->convertToJalali();
     }
 
 }
