@@ -40,8 +40,16 @@ class MyCalendar
 
     public static function addDay($number)
     {
-        $day = Carbon::now()->addDay($number + 1);
-        $newDay = new Day($day);
+        $now = Carbon::now();
+        $today = $now->dayOfWeek;
+        $day = $day = $number - $today;
+        if ($today > $number) {
+            $day = $number - $today + 7;
+        } else {
+            $day = $number - $today;
+        }
+        $nextDay = $now->addDay($day);
+        $newDay = new Day($nextDay);
         return $newDay->convertToJalali();
     }
 

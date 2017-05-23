@@ -57,24 +57,16 @@ class UserController extends Controller
             return view('admin.users.index', compact('users'));
         }
         $today = carbon::today()->dayOfWeek;
-
-        return $this->showMenu($today, false);
+        return $this->showMenu($today);
     }
 
-    public function showMenu($day, $add = true)
+    public function showMenu($day)
     {
         if ($day > 6) {
             return $this->index();
         }
-
-        if ($add) {
-            $weekDay = MyCalendar::addDay($day);
-        } else {
-            $weekDay = MyCalendar::today();
-        }
-
+        $weekDay = MyCalendar::addDay($day);
         $user = Auth::user();
-//        $date = carbon::now();
         $orders = Order::where('user_id', $user->id)->get();
         $can_order = true;
         //$order->created_at->toDateString() == $date->toDateString() and
